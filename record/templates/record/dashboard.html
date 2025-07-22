@@ -10,11 +10,11 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/air-datepicker@3.6.0/air-datepicker.min.css">
 
         <style>
-.dropdown:focus-within .dropdown-menu {
-  /* @apply block; */
-  display:block;
-}
-    </style>
+            .dropdown:focus-within .dropdown-menu {
+            /* @apply block; */
+            display:block;
+            }
+        </style>
     </head>
 
     <body class="bg-gray-900">
@@ -22,26 +22,26 @@
         <section id="filter_section" class="flex justify-between  w-full h-24 px-8 my-5">
             <div class="flex space-x-3">
                     <div class="dropdown inline-block relative">
-                        <button class="rounded-lg border-2 border-gray-200 text-gray-200 font-semibold py-2 px-4 rounded inline-flex items-center">
-                        <span class="mr-1">TimeFrame</span>
+                        <button class="rounded-lg border-2 border-gray-200 text-gray-200 font-semibold h-12 px-4 rounded inline-flex items-center">
+                        <span id="time_frame_selector" class="mr-1">All</span>
                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/> </svg>
                         </button>
                         <ul class="dropdown-menu absolute hidden text-gray-700 pt-1">
-                            <li class=""><a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">All</a></li>
-                            <li class=""><a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Date Range</a></li>
-                            <li class=""><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Yearly</a></li>
-                            <li class=""><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Monthly</a></li>
-                            <li class=""><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Weekly</a></li>
-                            <li class=""><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Daily</a></li>
+                            <li class="" onclick="selectTimeFrame('All')"><a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">All</a></li>
+                            <li class="" onclick="selectTimeFrame('Date Range')"><a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Date Range</a></li>
+                            <li class="" onclick="selectTimeFrame('Yearly')"><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Yearly</a></li>
+                            <li class="" onclick="selectTimeFrame('Monthly')"><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Monthly</a></li>
+                            <!-- <li class=""><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Weekly</a></li> -->
+                            <li class="" onclick="selectTimeFrame('Daily')"><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Daily</a></li>
                         </ul>
                     </div>
 
                     <div>
-                        <input id="date_input" class="h-10 rounded-lg border-2 border-gray-200 text-gray-200 text-center" />
+                        <input id="date_input" class="h-12 rounded-lg border-2 border-gray-200 text-gray-200 text-center" />
                     </div>
 
                     <div class="dropdown inline-block relative">
-                        <button class="rounded-lg border-2 border-gray-200 text-gray-200 font-semibold py-2 px-4 rounded inline-flex items-center">
+                        <button class="rounded-lg border-2 border-gray-200 text-gray-200 font-semibold h-12 px-4 rounded inline-flex items-center">
                         <span class="mr-1">Account</span>
                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/> </svg>
                         </button>
@@ -56,15 +56,84 @@
             <div class="flex space-x-3">
                 <button class="h-12 rounded-lg px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300">New Trade</button>
                 <button class="h-12 rounded-lg px-4 py-2 border-2 border-gray-200 text-gray-200 hover:bg-gray-600 hover:text-gray-100 duration-300">See Open Trades</button>
-            </div>
-            
+            </div>            
+        </section>
+
+        <section id="stats">
+
+
+        </section>
+
+
+        <section id="ledger">
+
+        </section>
+
+
+        <section id="trades">
+
         </section>
 
     </body>
 
 
 <script>
-    new AirDatepicker("#date_input")
+
+    let en_loc = {
+        days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
+        daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+        daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+        months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+        monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        today: "Today",
+        clear: "Clear",
+        firstDay: 0
+    }
+
+    selectTimeFrame('All')
+
+    function selectTimeFrame(time_frame) {
+        document.getElementById('time_frame_selector').innerHTML = time_frame
+        document.getElementById('date_input').value = ""
+
+        //TODO DELETE OLD AIR_DATEPICKER
+        
+        switch (time_frame) {
+            case "All":
+                document.getElementById('date_input').disabled = true
+                //load content
+                break;
+            case "Date Range":
+                document.getElementById('date_input').disabled = false
+                new AirDatepicker("#date_input", {locale: en_loc, range: true})
+                //create call back for the calendar selection to load data
+
+                break;
+            case "Yearly":
+                document.getElementById('date_input').disabled = false
+                new AirDatepicker("#date_input", {locale: en_loc, view: "years", minView: 'years'})
+                //create call back for the calendar selection to load data
+
+                break;
+            case "Monthly":
+                document.getElementById('date_input').disabled = false
+                new AirDatepicker("#date_input", {locale: en_loc, view: "months", minView: 'months'})
+                //create call back for the calendar selection to load data
+
+                break;
+            case "Daily":
+                document.getElementById('date_input').disabled = false
+                new AirDatepicker("#date_input", {locale: en_loc, view: "days", minView: 'days'})
+                //create call back for the calendar selection to load data
+
+                break;
+            default:
+                console.log("selectTimeFrame error " + time_frame)
+                break;
+
+                
+        }
+    }
 </script>
 
 </html>
