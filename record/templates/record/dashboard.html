@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/air-datepicker@3.6.0/air-datepicker.min.js"></script>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/air-datepicker@3.6.0/air-datepicker.min.css">
+
+        <style>
+.dropdown:focus-within .dropdown-menu {
+  /* @apply block; */
+  display:block;
+}
+    </style>
+    </head>
+
+    <body class="bg-gray-900">
+
+        <section id="filter_section" class="flex justify-between  w-full h-24 px-8 my-5">
+            <div class="flex space-x-3">
+                    <div class="dropdown inline-block relative">
+                        <button class="rounded-lg border-2 border-gray-200 text-gray-200 font-semibold py-2 px-4 rounded inline-flex items-center">
+                        <span class="mr-1">TimeFrame</span>
+                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/> </svg>
+                        </button>
+                        <ul class="dropdown-menu absolute hidden text-gray-700 pt-1">
+                            <li class=""><a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">All</a></li>
+                            <li class=""><a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Date Range</a></li>
+                            <li class=""><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Yearly</a></li>
+                            <li class=""><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Monthly</a></li>
+                            <li class=""><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Weekly</a></li>
+                            <li class=""><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Daily</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <input id="date_input" class="h-10 rounded-lg border-2 border-gray-200 text-gray-200 text-center" />
+                    </div>
+
+                    <div class="dropdown inline-block relative">
+                        <button class="rounded-lg border-2 border-gray-200 text-gray-200 font-semibold py-2 px-4 rounded inline-flex items-center">
+                        <span class="mr-1">Account</span>
+                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/> </svg>
+                        </button>
+                        <ul class="dropdown-menu absolute hidden text-gray-700 pt-1">
+                            <li class=""><a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">1st Paper Trading</a></li>
+                            <li class=""><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Binance</a></li>
+                        </ul>
+                    </div>
+
+            </div>
+            
+            <div class="flex space-x-3">
+                <button class="h-12 rounded-lg px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300">New Trade</button>
+                <button class="h-12 rounded-lg px-4 py-2 border-2 border-gray-200 text-gray-200 hover:bg-gray-600 hover:text-gray-100 duration-300">See Open Trades</button>
+            </div>
+            
+        </section>
+
+    </body>
+
+
+<script>
+    new AirDatepicker("#date_input")
+</script>
+
+</html>
+
+
