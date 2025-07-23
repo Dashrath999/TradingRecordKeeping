@@ -29,6 +29,7 @@ class Trades(models.Model):
     screenshot = models.ImageField(blank=True, null=True)
     account_balance_post_trade = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
     notes = models.TextField(blank=True, null=True)
+    trade_is_won = models.BooleanField(null=True)
 
 class TradeSteps(models.Model):
     trade_id = models.ForeignKey(Trades, on_delete=models.CASCADE)
