@@ -231,9 +231,16 @@
                     </tbody>
                 </table>
             </div>
-
-            <!-- TODO INCLUDE LEDGER NOTES -->
-
+            <textarea id="message" rows="4" class="mt-5 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Analyse your trading period"></textarea>
+            <div class="w-full flex justify-center">
+                <button type="button" class="mt-3 text-white bg-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-1">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                </svg>
+                    Ajouter une note
+                </button>
+            </div>
+            
         </section>
 
 
@@ -335,10 +342,16 @@
                                 12.05.25 13:24
                             </td>
                             <td class="px-6 py-4">
-                                13.05.25 10:01
+                                
                             </td>
                             <td class="px-6 py-4">
-                                <span class="text-green-500">3694.08</span>
+                                
+                            </td>
+                            <td class="px-6 py-4">
+                                <span class="text-red-500">3.12</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                1st Paper Trading
                             </td>
                         </tr>
                     </tbody>
@@ -463,6 +476,9 @@
                                         <th scope="col" class="px-6 py-3">
                                             Current P/L
                                         </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Actions
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -482,6 +498,12 @@
                                         <td class="px-6 py-4">
                                             0
                                         </td>
+                                        <td class="px-6 py-4">
+                                            <div class="flex">
+                                                <button type="button" class="w-1/2 py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onclick="alert('edit trade')">Edit</button>
+                                                <button type="button" class="w-1/2 py-2.5 px-5  mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-red-200 hover:bg-red-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:ring-red-100 dark:focus:ring-red-700 dark:bg-red-800 dark:text-gray-400 dark:border-red-600 dark:hover:text-white dark:hover:bg-red-700" onclick="alert('delete trade')">Delete</button>
+                                            </div>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -496,6 +518,16 @@
                             </button>
                         </div>
 
+                        <h3 class="text-gray-200 text-xl">Trade Notes</h3>
+                        <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Which trading strategy you used (e.g., breakout, mean reversion) / Your rationale—technical/fundamental setup / How you felt or what you thought during the trade / Was the trade according to your plan? / What could you improve ? / Mistakes Made / Rating"></textarea>
+                        <div class="w-full flex justify-center">
+                            <button type="button" class="text-white bg-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                            </svg>
+                                Ajouter une note
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -507,6 +539,8 @@
 
 
         <!-- See Open trade modal -->
+
+        <!-- Add Trade Step modal -->
 
     </body>
 
