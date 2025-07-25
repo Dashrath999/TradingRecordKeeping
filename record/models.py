@@ -3,10 +3,13 @@ from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Accounts(models.Model):
-    name = models.CharField(max_length=25)
+    name = models.CharField(max_length=25, unique=True)
     initial_balance = models.DecimalField(max_digits=8, decimal_places=2)
     current_balance  = models.DecimalField(max_digits=8, decimal_places=2)
     money_secured = models.DecimalField(max_digits=8, decimal_places=2, default=0.00)
+
+    def __str__(self):
+        return self.name
      
 
 class Trades(models.Model):
@@ -24,7 +27,7 @@ class Trades(models.Model):
     initial_stop_loss = models.FloatField()
     initial_tp = models.FloatField(blank=True, null=True)
     commission_fee = models.DecimalField(max_digits=8, decimal_places=2)
-    pl = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)
+    pl = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True, default=0)
     risk = models.DecimalField(max_digits=5, decimal_places=2, validators=[MinValueValidator(0.00), MaxValueValidator(100.00)])
     screenshot = models.ImageField(blank=True, null=True)
     account_balance_post_trade = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True)

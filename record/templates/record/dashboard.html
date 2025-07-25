@@ -49,19 +49,32 @@
 
                     <div class="dropdown inline-block relative">
                         <button class="rounded-lg border-2 border-gray-600 text-gray-200 font-semibold h-12 px-4 rounded inline-flex items-center">
-                        <span class="mr-1">Account</span>
+                        <span id="account_selector" class="mr-1">All</span>
                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/> </svg>
                         </button>
                         <ul class="dropdown-menu absolute hidden text-gray-700 pt-1">
-                            <li class=""><a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">1st Paper Trading</a></li>
-                            <li class=""><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Binance</a></li>
+                            <li class=""><a class="account rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">All</a></li>
+                            <!-- <li class=""><a class="account  bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">1st Paper Trading</a></li>
+                            <li class=""><a class="account  bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Binance</a></li> -->
+
+                            {% for a in accounts %}
+                                <li class=""><a class="account  bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">{{a}}</a></li>
+                            {% endfor %}
+
+                            <li class="flex justify-center bg-gray-200 rounded-b" data-modal-target="new_account_modal" data-modal-toggle="new_account_modal">
+                                <button type="button" class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="gray" class="size-6 mr-1">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                    </svg>
+                                </button>
+                            </li>
                         </ul>
                     </div>
 
             </div>
             
             <div class="flex space-x-3">
-                <button class="h-12 rounded-lg px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300">New Trade</button>
+                <button data-modal-target="new_trade_modal" data-modal-toggle="new_trade_modal" class="h-12 rounded-lg px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300">New Trade</button>
                 <button class="h-12 rounded-lg px-4 py-2 border-2 border-gray-600 text-gray-200 hover:bg-gray-600 hover:text-gray-100 duration-300">See Open Trades</button>
             </div>            
         </section>
@@ -258,6 +271,12 @@
                                 Status
                             </th>
                             <th scope="col" class="px-6 py-3">
+                                Open Datetime
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Close Datetime
+                            </th>
+                            <th scope="col" class="px-6 py-3">
                                 Symbol
                             </th>
                             <th scope="col" class="px-6 py-3">
@@ -267,13 +286,7 @@
                                 Timeframe
                             </th>
                             <th scope="col" class="px-6 py-3">
-                                Open Datetime
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Close Datetime
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Net € P/L
+                                Trade Size
                             </th>
                             <th scope="col" class="px-6 py-3">
                                 Trade Price in €
@@ -282,78 +295,54 @@
                                 Commision
                             </th>
                             <th scope="col" class="px-6 py-3">
+                                Net € P/L
+                            </th>
+                            <th scope="col" class="px-6 py-3">
                                 Account
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-600" onclick="open_trade_detail_modal(112)">
+                        {% for t in temp_trade %}
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-600" onclick="open_trade_detail_modal({{t.id}})">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                112
+                                {{t.id}}
                             </th>
                             <td class="px-6 py-4">
-                                <span class="rounded-lg bg-green-500 text-gray-200 px-2">Open</span>
+                                <span class="rounded-lg bg-green-500 text-gray-200 px-2">{{t.status}}</span>
                             </td>
                             <td class="px-6 py-4">
-                                BTC/USDT
+                                {{t.date_open|date:"d/m/Y H:i"}}
                             </td>
                             <td class="px-6 py-4">
-                                <span class="rounded-lg bg-green-500 text-gray-200 px-2">Long</span>
+                                {{t.date_closed|date:"d/m/Y H:i"}}
                             </td>
                             <td class="px-6 py-4">
-                                1d
+                                {{t.symbol}}
                             </td>
                             <td class="px-6 py-4">
-                                23.07.25 17:04
+                                <span class="rounded-lg bg-green-500 text-gray-200 px-2">{{t.position}}</span>
                             </td>
                             <td class="px-6 py-4">
-                                
+                                {{t.timeframe}}
                             </td>
                             <td class="px-6 py-4">
-                                
+                                {{t.trade_total_cost}}
                             </td>
                             <td class="px-6 py-4">
-                                
+                                {{t.trade_size}}
                             </td>
                             <td class="px-6 py-4">
-                                <span class="text-red-500">3.12</span>
+                                <span class="text-red-500">{{t.commission_fee}}</span>
                             </td>
                             <td class="px-6 py-4">
-                                1st Paper Trading
+                                {{t.pl}}
+                            </td>
+                            <td class="px-6 py-4">
+                                {{t.account_id.name}}
                             </td>
                         </tr>
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-600" onclick="open_trade_detail_modal(113)">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                113
-                            </th>
-                            <td class="px-6 py-4">
-                                <span class="rounded-lg bg-red-500 text-gray-200 px-2">Closed</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                LTC/USDT
-                            </td>
-                            <td class="px-6 py-4">
-                                <span class="rounded-lg bg-red-500 text-gray-200 px-2">Short</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                4h
-                            </td>
-                            <td class="px-6 py-4">
-                                12.05.25 13:24
-                            </td>
-                            <td class="px-6 py-4">
-                                
-                            </td>
-                            <td class="px-6 py-4">
-                                
-                            </td>
-                            <td class="px-6 py-4">
-                                <span class="text-red-500">3.12</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                1st Paper Trading
-                            </td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
             </div>
@@ -386,6 +375,12 @@
                                             Status
                                         </th>
                                         <th scope="col" class="px-6 py-3">
+                                            Open Datetime
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Close Datetime
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
                                             Symbol
                                         </th>
                                         <th scope="col" class="px-6 py-3">
@@ -395,13 +390,7 @@
                                             Timeframe
                                         </th>
                                         <th scope="col" class="px-6 py-3">
-                                            Open Datetime
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Close Datetime
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Net € P/L
+                                            Trade Size
                                         </th>
                                         <th scope="col" class="px-6 py-3">
                                             Trade Price in €
@@ -410,46 +399,54 @@
                                             Commision
                                         </th>
                                         <th scope="col" class="px-6 py-3">
+                                            Net € P/L
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
                                             Account
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-600" onclick="open_trade_detail_modal(112)">
+                                    {% for t in temp_trade %}
+                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-600" onclick="open_trade_detail_modal({{t.id}})">
                                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            112
+                                            {{t.id}}
                                         </th>
                                         <td class="px-6 py-4">
-                                            <span class="rounded-lg bg-green-500 text-gray-200 px-2">Open</span>
+                                            <span class="rounded-lg bg-green-500 text-gray-200 px-2">{{t.status}}</span>
                                         </td>
                                         <td class="px-6 py-4">
-                                            BTC/USDT
+                                            {{t.date_open|date:"d/m/Y H:i"}}
                                         </td>
                                         <td class="px-6 py-4">
-                                            <span class="rounded-lg bg-green-500 text-gray-200 px-2">Long</span>
+                                            {{t.date_closed|date:"d/m/Y H:i"}}
                                         </td>
                                         <td class="px-6 py-4">
-                                            1d
+                                            {{t.symbol}}
                                         </td>
                                         <td class="px-6 py-4">
-                                            23.07.25 17:04
+                                            <span class="rounded-lg bg-green-500 text-gray-200 px-2">{{t.position}}</span>
                                         </td>
                                         <td class="px-6 py-4">
-                                            
+                                            {{t.timeframe}}
                                         </td>
                                         <td class="px-6 py-4">
-                                            
+                                            {{t.trade_total_cost}}
                                         </td>
                                         <td class="px-6 py-4">
-                                            
+                                            {{t.trade_size}}
                                         </td>
                                         <td class="px-6 py-4">
-                                            <span class="text-red-500">3.12</span>
+                                            <span class="text-red-500">{{t.commission_fee}}</span>
                                         </td>
                                         <td class="px-6 py-4">
-                                            1st Paper Trading
+                                            {{t.pl}}
+                                        </td>
+                                        <td class="px-6 py-4">
+                                            {{t.account_id.name}}
                                         </td>
                                     </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -536,7 +533,50 @@
 
 
         <!-- Add trade form modal -->
+        <div id="new_trade_modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full mx-8">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+                    <!-- Modal header -->
+                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-200 dark:text-white">
+                            New Trade
+                        </h3>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="p-4 md:p-5 space-y-4 text-gray-200">
+                        <form method="post" action="new_trade">
+                            {% csrf_token %}
+                            {{ new_trade_form.as_p }}
+                            <button class="mt-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" type="submit">Send</button>
+                        </form>
+                    </div>       
+                </div>
+            </div>
+        </div>
 
+        <!-- Add account form modal -->
+        <div id="new_account_modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full mx-8">
+                <!-- Modal content -->
+                <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+                    <!-- Modal header -->
+                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-200 dark:text-white">
+                            New Account
+                        </h3>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="p-4 md:p-5 space-y-4">
+                        <form method="post" action="new_account">
+                            {% csrf_token %}
+                            {{ new_account_form.as_p }}
+                            <button type="submit">Send</button>
+                        </form>
+                    </div>       
+                </div>
+            </div>
+        </div>
 
         <!-- See Open trade modal -->
 
@@ -557,6 +597,8 @@
         clear: "Clear",
         firstDay: 0
     }
+
+    new AirDatepicker("#new_trade_open_date_input", {locale: en_loc, timepicker: true, dateFormat: "MM/dd/yyyy", timeFormat: "HH:mm:00"})
 
     selectTimeFrame('All')
 
@@ -617,6 +659,21 @@
                 break;
         }
     }
+</script>
+
+<script>
+    document.getElementById('account_selector').innerHTML = 'All'
+
+    let account_links = document.getElementsByClassName('account')
+    for(var i = 0; i < account_links.length; i++) {
+        var account_link = account_links[i]
+        console.log(this)
+        account_link.onclick = function() {
+            document.getElementById('account_selector').innerHTML = this.innerHTML
+            //load data if possible
+        }
+    }
+
 </script>
 
 <script>
