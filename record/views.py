@@ -68,4 +68,16 @@ def new_account(request):
             return redirect('record-dashboard')
         else:
             return HttpResponse(400)
-        
+
+
+def trade_detail(request):
+    try:
+        trade_id = request.GET['trade_id']
+    except Exception as e:
+        print(f'error {e}')
+        return HttpResponse(500)
+    
+    trade_info = Trades.objects.filter(id=trade_id).all()
+    trade_steps = TradeSteps.objects.filter(id=trade_id).order_by('datetime').all()
+
+    return render(request, "record/trade_detail.html", {'trade_info': trade_info, 'trade_steps': trade_steps})

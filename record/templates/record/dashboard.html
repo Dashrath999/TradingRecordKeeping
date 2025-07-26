@@ -304,7 +304,7 @@
                     </thead>
                     <tbody>
                         {% for t in temp_trade %}
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-600" onclick="open_trade_detail_modal({{t.id}})">
+                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-600" onclick="window.location = 'trade_detail?trade_id={{t.id}}'">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{t.id}}
                             </th>
@@ -347,190 +347,6 @@
                 </table>
             </div>
         </section>
-
-
-
-        <!-- Trade detail modal -->
-        <div id="trade_detail_modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative p-4 w-full mx-8">
-                <!-- Modal content -->
-                <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
-                    <!-- Modal header -->
-                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-                        <h3 class="text-xl font-semibold text-gray-200 dark:text-white">
-                            Trade #112 Details
-                        </h3>
-                    </div>
-                    <!-- Modal body -->
-                    <div class="p-4 md:p-5 space-y-4">
-
-                        <div class="relative overflow-x-auto">
-                            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                    <tr>
-                                        <th scope="col" class="px-6 py-3">
-                                            Trade ID
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Status
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Open Datetime
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Close Datetime
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Symbol
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Position
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Timeframe
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Trade Size
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Trade Price in €
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Commision
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Net € P/L
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Account
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for t in temp_trade %}
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-600" onclick="open_trade_detail_modal({{t.id}})">
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            {{t.id}}
-                                        </th>
-                                        <td class="px-6 py-4">
-                                            <span class="rounded-lg bg-green-500 text-gray-200 px-2">{{t.status}}</span>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{t.date_open|date:"d/m/Y H:i"}}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{t.date_closed|date:"d/m/Y H:i"}}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{t.symbol}}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <span class="rounded-lg bg-green-500 text-gray-200 px-2">{{t.position}}</span>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{t.timeframe}}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{t.trade_total_cost}}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{t.trade_size}}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <span class="text-red-500">{{t.commission_fee}}</span>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{t.pl}}
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{t.account_id.name}}
-                                        </td>
-                                    </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <img class="w-1/3 mx-auto" src="https://pypi-camo.freetls.fastly.net/2c39a68cb8914b60fa414d32b34b5f9ff113272a/68747470733a2f2f7261772e67697468756275736572636f6e74656e742e636f6d2f6d6174706c6f746c69622f6d706c66696e616e63652f6d61737465722f726561646d655f66696c65732f726561646d655f365f312e706e67" alt="trade_screenshot" />
-
-                        <h3 class="text-gray-200 text-xl">Trade Steps</h3>
-                        <div class="relative overflow-x-auto">
-                            <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                                    <tr>
-                                        <th scope="col" class="px-6 py-3">
-                                            Type
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Datetime
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Market Price
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Current Trade Size
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Current P/L
-                                        </th>
-                                        <th scope="col" class="px-6 py-3">
-                                            Actions
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-600" onclick="open_trade_detail_modal(112)">
-                                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            <span class="rounded-lg bg-green-500 text-gray-200 px-2">Entry</span>
-                                        </th>
-                                        <td class="px-6 py-4">
-                                            17.03.25 12:51
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            118214.00
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            0.00254
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            0
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            <div class="flex">
-                                                <button type="button" class="w-1/2 py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onclick="alert('edit trade')">Edit</button>
-                                                <button type="button" class="w-1/2 py-2.5 px-5  mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-red-200 hover:bg-red-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:ring-red-100 dark:focus:ring-red-700 dark:bg-red-800 dark:text-gray-400 dark:border-red-600 dark:hover:text-white dark:hover:bg-red-700" onclick="alert('delete trade')">Delete</button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="w-full flex justify-center">
-                            <button type="button" class="text-white bg-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-1">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>
-                                Ajouter un step
-                            </button>
-                        </div>
-
-                        <h3 class="text-gray-200 text-xl">Trade Notes</h3>
-                        <textarea id="message" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Which trading strategy you used (e.g., breakout, mean reversion) / Your rationale—technical/fundamental setup / How you felt or what you thought during the trade / Was the trade according to your plan? / What could you improve ? / Mistakes Made / Rating"></textarea>
-                        <div class="w-full flex justify-center">
-                            <button type="button" class="text-white bg-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-1">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                            </svg>
-                                Ajouter une note
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
 
         <!-- Add trade form modal -->
         <div id="new_trade_modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -714,19 +530,6 @@
         data: equity_curve_data,
         options: {responsive: true, maintainAspectRatio: false}
     })
-
-</script>
-
-<script>
-    function open_trade_detail_modal(trade_id) {
-        //get trade id details
-
-        //open modal
-        const modal = document.getElementById('trade_detail_modal');
-        const modalInstance = new Modal(modal);
-        modalInstance.show();
-    }
-
 
 </script>
 
