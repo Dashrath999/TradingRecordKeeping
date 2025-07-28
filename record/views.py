@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse, redirect
-from .forms import NewTradeForm, NewAccountForm
+from .forms import NewTradeForm, NewAccountForm, NewTradeStep
 from .models import Accounts, Trades, TradeSteps
 from decimal import Decimal
 import yfinance as yf
@@ -8,6 +8,7 @@ from pathlib import Path
 from django.core.files import File
 import pandas as pd
 import numpy as np
+from datetime import datetime, timedelta
 
 
 # BASE_DIR = Path(__file__).resolve().parent.parent
@@ -45,46 +46,55 @@ def new_trade(request):
         if f.is_valid():
             f = f.cleaned_data
 
+            #GET TRADE_SIZE AND TRADE_TOTAL_COST
             trade_size, trade_total_cost = calculate_trade_size_and_cost(f['account_id'].current_balance, f['risk'], f['entry_price'], f['initial_stop_loss'], f['commission_fee'])
+
+            #CREATE NEW_TRADE
             new_trade = Trades(date_open=f['date_open'], account_id=f['account_id'], position=f['position'], timeframe=f['timeframe'], symbol=f['symbol'], entry_price=f['entry_price'], trade_size=trade_size, trade_total_cost=trade_total_cost, initial_stop_loss=f['initial_stop_loss'], initial_tp=f['initial_tp'], commission_fee=f['commission_fee'], risk=f['risk'])
             new_trade.save()
-            
+
+            #CREATE ENTRY TRADE STEP
+            TradeSteps(trade_id=new_trade, datetime=f['date_open'], type="Entry", market_price=f['entry_price'], current_trade_size=trade_size, current_pl=0).save()
+
             #CREATE INITIAL SCREENSHOT WITH ENTRY, SL AND TP? MARKERS
-            ticker = yf.Ticker("BTC-USD")
-            data = ticker.history(start="2024-04-01", end="2024-07-25", interval="1d")
-
-            #make entry signal addplot
-            entry_signal = ['2024-04-05']
-            entry_date = pd.to_datetime(entry_signal)
-            entry_series = pd.Series(index=data.index, data=np.nan)
-            if entry_signal[0] in data.index:
-                entry_series[entry_signal[0]] = data.loc[entry_signal[0], "Close"]
-            ap = mpf.make_addplot(entry_series, type='scatter', markersize=100, marker='o', color='g')
-
-            #create sl and tp horizontal line
-            hlines = {}
-            hlines['hlines'] = [f['initial_stop_loss'], f['initial_tp']] if f['initial_tp'] else [f['initial_stop_loss']]
-            hlines['colors'] = ['r', 'g'] if f['initial_tp'] else ['r']
-            hlines['linestyle'] = '-.'
-
-            
-            mpf.plot(data, type='candle', style='yahoo', volume=True, savefig=f'trade_screenshots/trade_{new_trade.id}', addplot=ap, hlines=hlines)
-
-            path = Path(f'trade_screenshots/trade_{new_trade.id}.png')
-            with path.open(mode="rb") as file:
-                Trades.objects.filter(id=new_trade.id).update(screenshot=File(file, name=path.name))
-
-            #create_initial_screenshot(f)
-
-            #TODO CREATE ENTRY TRADE STEP
+            create_screenshot(new_trade)
 
             return redirect('record-dashboard')
         else:
             return HttpResponse(400)
 
 
-def create_initial_screenshot():
-    pass
+def create_screenshot(trade_info):
+    ticker = yf.Ticker(trade_info.symbol)
+
+    #get time period to look at
+    time_delta_days ={"1w": 21, "1d": 5, "4h": 3, "2h": 2, "1h": 2, "30m": 1, "15m": 1, "5m": 1}
+    start_date = trade_info.date_open - timedelta(days=time_delta_days[trade_info.timeframe])
+    end_date = datetime.now() if trade_info.date_closed == None else trade_info.date_closed + timedelta(days=time_delta_days[trade_info.timeframe])
+    data = ticker.history(start=start_date.strftime("%Y-%m-%d"), end=end_date.strftime("%Y-%m-%d"), interval=trade_info.timeframe)
+
+    #make entry signal addplot
+    entry_signal = [trade_info.date_open.strftime("%Y-%m-%d")]
+    entry_series = pd.Series(index=data.index, data=np.nan)
+    if entry_signal[0] in data.index:
+        entry_series[entry_signal[0]] = data.loc[entry_signal[0], "Close"]
+    ap = mpf.make_addplot(entry_series, type='scatter', markersize=100, marker='o', color='g')
+
+    #create sl and tp horizontal line
+    hlines = {}
+    hlines['hlines'] = [trade_info.initial_stop_loss, trade_info.initial_tp] if trade_info.initial_tp else [trade_info.initial_stop_loss]
+    hlines['colors'] = ['r', 'g'] if trade_info.initial_tp else ['r']
+    hlines['linestyle'] = '-.'
+
+    #TODO ITERATE THROUGH RELEVANT TRADE_STEPS TO MARK THEM ON THE PLOT
+
+    #save plot to filesystem #TODO KEEP ALL THE GENERATED PLOTS AND GIVE OPTION TO USER TO SEE THEM
+    mpf.plot(data, type='candle', style='yahoo', volume=True, savefig=f'trade_screenshots/trade_{trade_info.id}', addplot=ap, hlines=hlines)
+    path = Path(f'trade_screenshots/trade_{trade_info.id}.png')
+    with path.open(mode="rb") as file:
+        Trades.objects.filter(id=trade_info.id).update(screenshot=File(file, name=path.name)) 
+
+
 
 def calculate_trade_size_and_cost(account_balance, risk, entry_price, stop_loss, commision):
     risk_amount = Decimal(account_balance * (risk / 100))
@@ -117,7 +127,14 @@ def trade_detail(request):
         print(f'error {e}')
         return HttpResponse(500)
     
+    new_trade_step_form = NewTradeStep()
+    
     trade_info = Trades.objects.filter(id=trade_id).all()
-    trade_steps = TradeSteps.objects.filter(id=trade_id).order_by('datetime').all()
+    trade_steps = TradeSteps.objects.filter(trade_id=trade_id).order_by('datetime').all()
 
-    return render(request, "record/trade_detail.html", {'trade_info': trade_info, 'trade_steps': trade_steps})
+    return render(request, "record/trade_detail.html", {'trade_info': trade_info, 'trade_steps': trade_steps, 'new_trade_step_form': new_trade_step_form})
+
+
+def new_trade_step(request):
+    if request.method == 'POST':
+        print(request)
