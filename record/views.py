@@ -131,10 +131,21 @@ def trade_detail(request):
     
     trade_info = Trades.objects.filter(id=trade_id).all()
     trade_steps = TradeSteps.objects.filter(trade_id=trade_id).order_by('datetime').all()
+    trade_note = trade_info[0].notes
 
-    return render(request, "record/trade_detail.html", {'trade_info': trade_info, 'trade_steps': trade_steps, 'new_trade_step_form': new_trade_step_form})
+    return render(request, "record/trade_detail.html", {'trade_info': trade_info, 'trade_steps': trade_steps, 'new_trade_step_form': new_trade_step_form, 'trade_id': trade_id, 'trade_note': trade_note})
 
 
 def new_trade_step(request):
     if request.method == 'POST':
         print(request)
+
+
+def new_trade_note(request):
+    if request.method == 'POST':
+        try:
+            Trades.objects.filter(id=request.POST['trade_id']).update(notes=request.POST['note'])
+            return redirect(f'/trade_detail?trade_id={request.POST['trade_id']}')
+        except Exception as e:
+            print(request.POST, e)
+            return HttpResponse(400)

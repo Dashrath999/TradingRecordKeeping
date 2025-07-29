@@ -11,6 +11,7 @@ urlpatterns = [
 
     path('trade_detail', views.trade_detail, name='record-trade-detail'),
     path('new_trade_step', views.new_trade_step, name='record-new-trade-step'),
+    path('new_trade_note', views.new_trade_note, name='record-new-trade-note'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
