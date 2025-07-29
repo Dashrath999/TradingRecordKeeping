@@ -309,7 +309,7 @@
                                 {{t.id}}
                             </th>
                             <td class="px-6 py-4">
-                                <span class="rounded-lg bg-green-500 text-gray-200 px-2">{{t.status}}</span>
+                                <span class="rounded-lg {% if t.status == 'Closed' %}bg-red-500{% else %}bg-green-500{% endif %} text-gray-200 px-2">{{t.status}}</span>
                             </td>
                             <td class="px-6 py-4">
                                 {{t.date_open|date:"d/m/Y H:i"}}
@@ -321,7 +321,7 @@
                                 {{t.symbol}}
                             </td>
                             <td class="px-6 py-4">
-                                <span class="rounded-lg bg-green-500 text-gray-200 px-2">{{t.position}}</span>
+                                <span class="rounded-lg {% if t.position == 'Short' %}bg-red-500{% else %}bg-green-500{% endif %} text-gray-200 px-2">{{t.position}}</span>
                             </td>
                             <td class="px-6 py-4">
                                 {{t.timeframe}}
@@ -336,7 +336,7 @@
                                 <span class="text-red-500">{{t.commission_fee}}</span>
                             </td>
                             <td class="px-6 py-4">
-                                {{t.pl}}
+                                <span class="{% if t.pl < 0 %}text-red-500{% else %}text-green-500{% endif %}">{{t.pl}}</span>
                             </td>
                             <td class="px-6 py-4">
                                 {{t.account_id.name}}

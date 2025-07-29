@@ -58,10 +58,10 @@ class NewAccountForm(forms.ModelForm):
         fields = ['name', 'initial_balance']
 
 
-class NewTradeStep(forms.ModelForm):
+class NewTradeStepForm(forms.ModelForm):
     class Meta:
         model = TradeSteps
-        fields = ['datetime', 'type', 'market_price']
+        fields = ['datetime', 'current_market_price', 'type', 'target_market_price', 'trade_size_amount']
         widgets = {
             'datetime': forms.TextInput(attrs={
                 'class': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
@@ -70,7 +70,13 @@ class NewTradeStep(forms.ModelForm):
             'type': forms.Select(attrs={
                 'class': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
             }),
-            'market_price': forms.NumberInput(attrs={
+            'current_market_price': forms.NumberInput(attrs={
+                'class': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
+            }),
+            'target_market_price': forms.NumberInput(attrs={
+                'class': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
+            }),
+            'trade_size_amount': forms.NumberInput(attrs={
                 'class': 'bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500',
             })
         }
@@ -82,3 +88,6 @@ class NewTradeStep(forms.ModelForm):
             (key, label) for key, label in self.fields['type'].choices
             if key not in excluded
         ]
+
+        self.fields['target_market_price'].required = False
+        self.fields['trade_size_amount'].required = False
