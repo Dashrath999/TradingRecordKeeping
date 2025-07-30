@@ -303,7 +303,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {% for t in temp_trade %}
+                        {% for t in all_trades %}
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-600" onclick="window.location = 'trade_detail?trade_id={{t.id}}'">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                 {{t.id}}
@@ -415,11 +415,15 @@
 
     new AirDatepicker("#new_trade_open_date_input", {locale: en_loc, timepicker: true, dateFormat: "MM/dd/yyyy", timeFormat: "HH:mm:00"})
 
+
+
     selectTimeFrame('All')
 
     function selectTimeFrame(time_frame) {
         document.getElementById('time_frame_selector').innerHTML = time_frame
         document.getElementById('date_input').value = ""
+        
+        let account_name = document.getElementById('account_selector').innerHTML
 
 
         //TODO DELETE OLD AIR_DATEPICKER
@@ -427,7 +431,7 @@
         switch (time_frame) {
             case "All":
                 document.getElementById('date_input').disabled = true
-                //load content
+                loaddata(time_frame, null, account_name)
 
                 break;
             case "Date Range":
@@ -436,12 +440,11 @@
                 
                 //create call back for the calendar selection to load data
                 document.getElementById('date_input').onchange = function() {
-                    let val = document.getElementById('date_input').value
+                    let date_val = document.getElementById('date_input').value
                     
-                    if (val.indexOf(",") > -1) {
+                    if (date_val.indexOf(",") > -1)
                         //load data
-                        alert(val)
-                    }
+                        loaddata(time_frame, date_val, account_name)
                 }
 
                 break;
@@ -450,7 +453,7 @@
                 new AirDatepicker("#date_input", {locale: en_loc, view: "years", minView: 'years'})
 
                 //create call back for the calendar selection to load data
-                document.getElementById('date_input').onchange = function() {alert(document.getElementById('date_input').value)}
+                document.getElementById('date_input').onchange = function() {let date_val = document.getElementById('date_input').value; loaddata(time_frame, date_val, account_name)}
 
                 break;
             case "Monthly":
@@ -458,7 +461,7 @@
                 new AirDatepicker("#date_input", {locale: en_loc, view: "months", minView: 'months'})
                 
                 //create call back for the calendar selection to load data
-                document.getElementById('date_input').onchange = function() {alert(document.getElementById('date_input').value)}
+                document.getElementById('date_input').onchange = function() {let date_val = document.getElementById('date_input').value; loaddata(time_frame, date_val, account_name)}
 
                 break;
             case "Daily":
@@ -466,7 +469,7 @@
                 new AirDatepicker("#date_input", {locale: en_loc, view: "days", minView: 'days'})
 
                 //create call back for the calendar selection to load data
-                document.getElementById('date_input').onchange = function() {alert(document.getElementById('date_input').value)}
+                document.getElementById('date_input').onchange = function() {let date_val = document.getElementById('date_input').value; loaddata(time_frame, date_val, account_name)}
 
                 break;
             default:
@@ -474,6 +477,60 @@
                 break;
         }
     }
+
+    async function loaddata(time_frame, date, account_name) {
+        let params = new URLSearchParams({'time_frame': time_frame, 'date': date, 'account_name': account_name}).toString()
+        const url = 'loaddata?' + params
+
+        if (time_frame == 'All') {
+            const response = await(fetch(url))
+            if (!response.ok) {
+                alert('error while loading data')
+            }
+
+            const json = await response.json()
+            console.log(json)
+        }
+        else if (time_frame == 'Date Range') {
+            const response = await(fetch(url))
+            if (!response.ok) {
+                alert('error while loading data')
+            }
+
+            const json = await response.json()
+            console.log(json)
+        }
+        else if (time_frame == 'Yearly') {
+            const response = await(fetch(url))
+            if (!response.ok) {
+                alert('error while loading data')
+            }
+
+            const json = await response.json()
+            console.log(json)
+        }
+        else if (time_frame == 'Monthly') {
+            const response = await(fetch(url))
+            if (!response.ok) {
+                alert('error while loading data')
+            }
+
+            const json = await response.json()
+            console.log(json)
+        }
+        else if (time_frame == 'Daily') {
+            const response = await(fetch(url))
+            if (!response.ok) {
+                alert('error while loading data')
+            }
+
+            const json = await response.json()
+            console.log(json)
+        }
+
+
+    }
+
 </script>
 
 <script>

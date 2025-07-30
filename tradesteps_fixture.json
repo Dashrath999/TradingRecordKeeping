@@ -1,0 +1,2194 @@
+[
+  {
+    "model": "record.tradesteps",
+    "pk": 10,
+    "fields": {
+      "trade_id": 1,
+      "datetime": "2024-03-21T03:40:00",
+      "type": "Entry",
+      "target_market_price": 2872.26,
+      "trade_size_amount": 0.78,
+      "current_market_price": 2872.26,
+      "current_trade_size": 0.78,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 11,
+    "fields": {
+      "trade_id": 1,
+      "datetime": "2024-03-21T06:40:00",
+      "type": "Scale In",
+      "trade_size_amount": 0.24,
+      "target_market_price": null,
+      "current_market_price": 2872.26,
+      "current_trade_size": 1.02,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 12,
+    "fields": {
+      "trade_id": 1,
+      "datetime": "2024-03-21T07:40:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.51,
+      "target_market_price": null,
+      "current_market_price": 2872.26,
+      "current_trade_size": 0.51,
+      "current_pl": "-16.03500000000000014210854715",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 13,
+    "fields": {
+      "trade_id": 1,
+      "datetime": "2024-03-21T13:40:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 2831.14,
+      "current_market_price": 2831.14,
+      "current_trade_size": 0.51,
+      "current_pl": "-32.07000000000000028421709430404007434844970703125",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 20,
+    "fields": {
+      "trade_id": 2,
+      "datetime": "2023-05-12T21:15:00",
+      "type": "Entry",
+      "target_market_price": 307.3,
+      "trade_size_amount": 1.93,
+      "current_market_price": 307.3,
+      "current_trade_size": 1.93,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 23,
+    "fields": {
+      "trade_id": 2,
+      "datetime": "2023-05-15T10:15:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 311.26,
+      "current_market_price": 311.26,
+      "current_trade_size": 1.93,
+      "current_pl": "-7.63999999999999968025576890795491635799407958984375",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 30,
+    "fields": {
+      "trade_id": 3,
+      "datetime": "2023-01-03T21:54:00",
+      "type": "Entry",
+      "target_market_price": 2428.25,
+      "trade_size_amount": 1.7,
+      "current_market_price": 2428.25,
+      "current_trade_size": 1.7,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 32,
+    "fields": {
+      "trade_id": 3,
+      "datetime": "2023-01-04T06:54:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.85,
+      "target_market_price": null,
+      "current_market_price": 2428.25,
+      "current_trade_size": 0.85,
+      "current_pl": "-31.39999999999999857891452848",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 33,
+    "fields": {
+      "trade_id": 3,
+      "datetime": "2023-01-04T13:54:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 2465.19,
+      "current_market_price": 2465.19,
+      "current_trade_size": 0.85,
+      "current_pl": "-62.7999999999999971578290569595992565155029296875",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 40,
+    "fields": {
+      "trade_id": 4,
+      "datetime": "2022-10-03T18:13:00",
+      "type": "Entry",
+      "target_market_price": 844.74,
+      "trade_size_amount": 0.22,
+      "current_market_price": 844.74,
+      "current_trade_size": 0.22,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 41,
+    "fields": {
+      "trade_id": 4,
+      "datetime": "2022-10-04T01:13:00",
+      "type": "Scale In",
+      "trade_size_amount": 0.11,
+      "target_market_price": null,
+      "current_market_price": 844.74,
+      "current_trade_size": 0.33,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 43,
+    "fields": {
+      "trade_id": 4,
+      "datetime": "2022-10-05T18:13:00",
+      "type": "Take Profit",
+      "trade_size_amount": null,
+      "target_market_price": 843.87,
+      "current_market_price": 843.87,
+      "current_trade_size": 0.33,
+      "current_pl": "0.190000000000000002220446049250313080847263336181640625",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 50,
+    "fields": {
+      "trade_id": 5,
+      "datetime": "2022-07-19T09:43:00",
+      "type": "Entry",
+      "target_market_price": 2589.95,
+      "trade_size_amount": 0.49,
+      "current_market_price": 2589.95,
+      "current_trade_size": 0.49,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 60,
+    "fields": {
+      "trade_id": 6,
+      "datetime": "2023-02-19T07:24:00",
+      "type": "Entry",
+      "target_market_price": 185.5,
+      "trade_size_amount": 0.72,
+      "current_market_price": 185.5,
+      "current_trade_size": 0.72,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 61,
+    "fields": {
+      "trade_id": 6,
+      "datetime": "2023-02-19T15:24:00",
+      "type": "Scale In",
+      "trade_size_amount": 0.38,
+      "target_market_price": null,
+      "current_market_price": 185.5,
+      "current_trade_size": 1.1,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 63,
+    "fields": {
+      "trade_id": 6,
+      "datetime": "2023-02-19T12:24:00",
+      "type": "Take Profit",
+      "trade_size_amount": null,
+      "target_market_price": 188.97,
+      "current_market_price": 188.97,
+      "current_trade_size": 1.1,
+      "current_pl": "2.5",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 70,
+    "fields": {
+      "trade_id": 7,
+      "datetime": "2020-05-11T01:37:00",
+      "type": "Entry",
+      "target_market_price": 2938.45,
+      "trade_size_amount": 0.74,
+      "current_market_price": 2938.45,
+      "current_trade_size": 0.74,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 71,
+    "fields": {
+      "trade_id": 7,
+      "datetime": "2020-05-11T05:37:00",
+      "type": "Scale In",
+      "trade_size_amount": 0.24,
+      "target_market_price": null,
+      "current_market_price": 2938.45,
+      "current_trade_size": 0.98,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 73,
+    "fields": {
+      "trade_id": 7,
+      "datetime": "2020-05-11T05:37:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 2931.29,
+      "current_market_price": 2931.29,
+      "current_trade_size": 0.98,
+      "current_pl": "-5.29999999999999982236431605997495353221893310546875",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 80,
+    "fields": {
+      "trade_id": 8,
+      "datetime": "2024-08-08T09:32:00",
+      "type": "Entry",
+      "target_market_price": 1282.0,
+      "trade_size_amount": 0.77,
+      "current_market_price": 1282.0,
+      "current_trade_size": 0.77,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 82,
+    "fields": {
+      "trade_id": 8,
+      "datetime": "2024-08-08T17:32:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.39,
+      "target_market_price": null,
+      "current_market_price": 1282.0,
+      "current_trade_size": 0.38,
+      "current_pl": "-5.384999999999999786837179272",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 83,
+    "fields": {
+      "trade_id": 8,
+      "datetime": "2024-08-09T16:32:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 1295.99,
+      "current_market_price": 1295.99,
+      "current_trade_size": 0.38,
+      "current_pl": "-10.769999999999999573674358543939888477325439453125",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 90,
+    "fields": {
+      "trade_id": 9,
+      "datetime": "2024-07-17T20:38:00",
+      "type": "Entry",
+      "target_market_price": 1662.63,
+      "trade_size_amount": 1.95,
+      "current_market_price": 1662.63,
+      "current_trade_size": 1.95,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 92,
+    "fields": {
+      "trade_id": 9,
+      "datetime": "2024-07-18T04:38:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.97,
+      "target_market_price": null,
+      "current_market_price": 1662.63,
+      "current_trade_size": 0.98,
+      "current_pl": "14.31499999999999950262008497",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 93,
+    "fields": {
+      "trade_id": 9,
+      "datetime": "2024-07-19T02:38:00",
+      "type": "Take Profit",
+      "trade_size_amount": null,
+      "target_market_price": 1647.95,
+      "current_market_price": 1647.95,
+      "current_trade_size": 0.98,
+      "current_pl": "28.629999999999999005240169935859739780426025390625",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 100,
+    "fields": {
+      "trade_id": 10,
+      "datetime": "2025-05-08T01:39:00",
+      "type": "Entry",
+      "target_market_price": 1838.59,
+      "trade_size_amount": 0.39,
+      "current_market_price": 1838.59,
+      "current_trade_size": 0.39,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 102,
+    "fields": {
+      "trade_id": 10,
+      "datetime": "2025-05-08T06:39:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.2,
+      "target_market_price": null,
+      "current_market_price": 1838.59,
+      "current_trade_size": 0.19,
+      "current_pl": "-6.219999999999999751310042484",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 103,
+    "fields": {
+      "trade_id": 10,
+      "datetime": "2025-05-08T22:39:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 1870.5,
+      "current_market_price": 1870.5,
+      "current_trade_size": 0.19,
+      "current_pl": "-12.4399999999999995026200849679298698902130126953125",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 110,
+    "fields": {
+      "trade_id": 11,
+      "datetime": "2025-02-03T18:46:00",
+      "type": "Entry",
+      "target_market_price": 2655.5,
+      "trade_size_amount": 0.78,
+      "current_market_price": 2655.5,
+      "current_trade_size": 0.78,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 112,
+    "fields": {
+      "trade_id": 11,
+      "datetime": "2025-02-04T00:46:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.39,
+      "target_market_price": null,
+      "current_market_price": 2655.5,
+      "current_trade_size": 0.39,
+      "current_pl": "-11.55000000000000071054273576",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 113,
+    "fields": {
+      "trade_id": 11,
+      "datetime": "2025-02-05T12:46:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 2685.12,
+      "current_market_price": 2685.12,
+      "current_trade_size": 0.39,
+      "current_pl": "-23.10000000000000142108547152020037174224853515625",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 120,
+    "fields": {
+      "trade_id": 12,
+      "datetime": "2020-01-07T20:17:00",
+      "type": "Entry",
+      "target_market_price": 2581.6,
+      "trade_size_amount": 1.76,
+      "current_market_price": 2581.6,
+      "current_trade_size": 1.76,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 121,
+    "fields": {
+      "trade_id": 12,
+      "datetime": "2020-01-08T00:17:00",
+      "type": "Scale In",
+      "trade_size_amount": 0.15,
+      "target_market_price": null,
+      "current_market_price": 2581.6,
+      "current_trade_size": 1.91,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 122,
+    "fields": {
+      "trade_id": 12,
+      "datetime": "2020-01-08T01:17:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.95,
+      "target_market_price": null,
+      "current_market_price": 2581.6,
+      "current_trade_size": 0.96,
+      "current_pl": "-12.34500000000000063948846218",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 123,
+    "fields": {
+      "trade_id": 12,
+      "datetime": "2020-01-08T16:17:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 2567.57,
+      "current_market_price": 2567.57,
+      "current_trade_size": 0.96,
+      "current_pl": "-24.690000000000001278976924368180334568023681640625",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 130,
+    "fields": {
+      "trade_id": 13,
+      "datetime": "2023-12-27T02:42:00",
+      "type": "Entry",
+      "target_market_price": 282.92,
+      "trade_size_amount": 0.11,
+      "current_market_price": 282.92,
+      "current_trade_size": 0.11,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 133,
+    "fields": {
+      "trade_id": 13,
+      "datetime": "2023-12-29T14:42:00",
+      "type": "Take Profit",
+      "trade_size_amount": null,
+      "target_market_price": 283.09,
+      "current_market_price": 283.09,
+      "current_trade_size": 0.11,
+      "current_pl": "0.0200000000000000004163336342344337026588618755340576171875",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 140,
+    "fields": {
+      "trade_id": 14,
+      "datetime": "2023-05-15T02:43:00",
+      "type": "Entry",
+      "target_market_price": 2133.76,
+      "trade_size_amount": 1.72,
+      "current_market_price": 2133.76,
+      "current_trade_size": 1.72,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 143,
+    "fields": {
+      "trade_id": 14,
+      "datetime": "2023-05-17T02:43:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 2153.4,
+      "current_market_price": 2153.4,
+      "current_trade_size": 1.72,
+      "current_pl": "-33.780000000000001136868377216160297393798828125",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 150,
+    "fields": {
+      "trade_id": 15,
+      "datetime": "2021-07-21T07:07:00",
+      "type": "Entry",
+      "target_market_price": 143.8,
+      "trade_size_amount": 1.84,
+      "current_market_price": 143.8,
+      "current_trade_size": 1.84,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 152,
+    "fields": {
+      "trade_id": 15,
+      "datetime": "2021-07-21T12:07:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.92,
+      "target_market_price": null,
+      "current_market_price": 143.8,
+      "current_trade_size": 0.92,
+      "current_pl": "1.850000000000000088817841970",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 153,
+    "fields": {
+      "trade_id": 15,
+      "datetime": "2021-07-22T22:07:00",
+      "type": "Take Profit",
+      "trade_size_amount": null,
+      "target_market_price": 145.81,
+      "current_market_price": 145.81,
+      "current_trade_size": 0.92,
+      "current_pl": "3.70000000000000017763568394002504646778106689453125",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 160,
+    "fields": {
+      "trade_id": 16,
+      "datetime": "2020-04-25T15:31:00",
+      "type": "Entry",
+      "target_market_price": 2965.39,
+      "trade_size_amount": 0.98,
+      "current_market_price": 2965.39,
+      "current_trade_size": 0.98,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 162,
+    "fields": {
+      "trade_id": 16,
+      "datetime": "2020-04-25T18:31:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.49,
+      "target_market_price": null,
+      "current_market_price": 2965.39,
+      "current_trade_size": 0.49,
+      "current_pl": "-6.839999999999999857891452848",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 163,
+    "fields": {
+      "trade_id": 16,
+      "datetime": "2020-04-27T12:31:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 2951.43,
+      "current_market_price": 2951.43,
+      "current_trade_size": 0.49,
+      "current_pl": "-13.67999999999999971578290569595992565155029296875",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 170,
+    "fields": {
+      "trade_id": 17,
+      "datetime": "2021-07-08T15:05:00",
+      "type": "Entry",
+      "target_market_price": 895.27,
+      "trade_size_amount": 0.58,
+      "current_market_price": 895.27,
+      "current_trade_size": 0.58,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 172,
+    "fields": {
+      "trade_id": 17,
+      "datetime": "2021-07-08T23:05:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.29,
+      "target_market_price": null,
+      "current_market_price": 895.27,
+      "current_trade_size": 0.29,
+      "current_pl": "-1.550000000000000044408920985",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 173,
+    "fields": {
+      "trade_id": 17,
+      "datetime": "2021-07-09T22:05:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 900.61,
+      "current_market_price": 900.61,
+      "current_trade_size": 0.29,
+      "current_pl": "-3.100000000000000088817841970012523233890533447265625",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 180,
+    "fields": {
+      "trade_id": 18,
+      "datetime": "2024-07-21T18:21:00",
+      "type": "Entry",
+      "target_market_price": 581.89,
+      "trade_size_amount": 1.38,
+      "current_market_price": 581.89,
+      "current_trade_size": 1.38,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 181,
+    "fields": {
+      "trade_id": 18,
+      "datetime": "2024-07-21T23:21:00",
+      "type": "Scale In",
+      "trade_size_amount": 0.35,
+      "target_market_price": null,
+      "current_market_price": 581.89,
+      "current_trade_size": 1.73,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 182,
+    "fields": {
+      "trade_id": 18,
+      "datetime": "2024-07-22T00:21:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.86,
+      "target_market_price": null,
+      "current_market_price": 581.89,
+      "current_trade_size": 0.87,
+      "current_pl": "5.990000000000000213162820728",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 183,
+    "fields": {
+      "trade_id": 18,
+      "datetime": "2024-07-22T11:21:00",
+      "type": "Take Profit",
+      "trade_size_amount": null,
+      "target_market_price": 573.21,
+      "current_market_price": 573.21,
+      "current_trade_size": 0.87,
+      "current_pl": "11.980000000000000426325641456060111522674560546875",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 190,
+    "fields": {
+      "trade_id": 19,
+      "datetime": "2021-11-13T17:46:00",
+      "type": "Entry",
+      "target_market_price": 2243.32,
+      "trade_size_amount": 1.98,
+      "current_market_price": 2243.32,
+      "current_trade_size": 1.98,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 193,
+    "fields": {
+      "trade_id": 19,
+      "datetime": "2021-11-15T15:46:00",
+      "type": "Take Profit",
+      "trade_size_amount": null,
+      "target_market_price": 2236.9,
+      "current_market_price": 2236.9,
+      "current_trade_size": 1.98,
+      "current_pl": "12.71000000000000085265128291212022304534912109375",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 200,
+    "fields": {
+      "trade_id": 20,
+      "datetime": "2022-08-22T02:53:00",
+      "type": "Entry",
+      "target_market_price": 1232.15,
+      "trade_size_amount": 1.77,
+      "current_market_price": 1232.15,
+      "current_trade_size": 1.77,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 201,
+    "fields": {
+      "trade_id": 20,
+      "datetime": "2022-08-22T04:53:00",
+      "type": "Scale In",
+      "trade_size_amount": 0.3,
+      "target_market_price": null,
+      "current_market_price": 1232.15,
+      "current_trade_size": 2.07,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 202,
+    "fields": {
+      "trade_id": 20,
+      "datetime": "2022-08-22T05:53:00",
+      "type": "Scale Out",
+      "trade_size_amount": 1.03,
+      "target_market_price": null,
+      "current_market_price": 1232.15,
+      "current_trade_size": 1.0399999999999998,
+      "current_pl": "-4.214999999999999857891452848",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 203,
+    "fields": {
+      "trade_id": 20,
+      "datetime": "2022-08-24T13:53:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 1227.39,
+      "current_market_price": 1227.39,
+      "current_trade_size": 1.0399999999999998,
+      "current_pl": "-8.42999999999999971578290569595992565155029296875",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 210,
+    "fields": {
+      "trade_id": 21,
+      "datetime": "2021-07-23T12:28:00",
+      "type": "Entry",
+      "target_market_price": 115.4,
+      "trade_size_amount": 0.91,
+      "current_market_price": 115.4,
+      "current_trade_size": 0.91,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 212,
+    "fields": {
+      "trade_id": 21,
+      "datetime": "2021-07-23T18:28:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.46,
+      "target_market_price": null,
+      "current_market_price": 115.4,
+      "current_trade_size": 0.45,
+      "current_pl": "-0.125",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 213,
+    "fields": {
+      "trade_id": 21,
+      "datetime": "2021-07-24T09:28:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 115.67,
+      "current_market_price": 115.67,
+      "current_trade_size": 0.45,
+      "current_pl": "-0.25",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 220,
+    "fields": {
+      "trade_id": 22,
+      "datetime": "2023-06-26T04:39:00",
+      "type": "Entry",
+      "target_market_price": 535.91,
+      "trade_size_amount": 1.55,
+      "current_market_price": 535.91,
+      "current_trade_size": 1.55,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 221,
+    "fields": {
+      "trade_id": 22,
+      "datetime": "2023-06-26T08:39:00",
+      "type": "Scale In",
+      "trade_size_amount": 0.08,
+      "target_market_price": null,
+      "current_market_price": 535.91,
+      "current_trade_size": 1.6300000000000001,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 222,
+    "fields": {
+      "trade_id": 22,
+      "datetime": "2023-06-26T09:39:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.82,
+      "target_market_price": null,
+      "current_market_price": 535.91,
+      "current_trade_size": 0.8100000000000002,
+      "current_pl": "-4.184999999999999609201495332",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 223,
+    "fields": {
+      "trade_id": 22,
+      "datetime": "2023-06-28T22:39:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 530.51,
+      "current_market_price": 530.51,
+      "current_trade_size": 0.8100000000000002,
+      "current_pl": "-8.3699999999999992184029906638897955417633056640625",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 230,
+    "fields": {
+      "trade_id": 23,
+      "datetime": "2022-05-04T11:01:00",
+      "type": "Entry",
+      "target_market_price": 377.07,
+      "trade_size_amount": 1.01,
+      "current_market_price": 377.07,
+      "current_trade_size": 1.01,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 232,
+    "fields": {
+      "trade_id": 23,
+      "datetime": "2022-05-04T15:01:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.51,
+      "target_market_price": null,
+      "current_market_price": 377.07,
+      "current_trade_size": 0.5,
+      "current_pl": "3.660000000000000142108547152",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 233,
+    "fields": {
+      "trade_id": 23,
+      "datetime": "2022-05-04T19:01:00",
+      "type": "Take Profit",
+      "trade_size_amount": null,
+      "target_market_price": 369.82,
+      "current_market_price": 369.82,
+      "current_trade_size": 0.5,
+      "current_pl": "7.32000000000000028421709430404007434844970703125",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 240,
+    "fields": {
+      "trade_id": 24,
+      "datetime": "2024-10-29T12:55:00",
+      "type": "Entry",
+      "target_market_price": 1604.79,
+      "trade_size_amount": 1.26,
+      "current_market_price": 1604.79,
+      "current_trade_size": 1.26,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 243,
+    "fields": {
+      "trade_id": 24,
+      "datetime": "2024-10-29T23:55:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 1615.88,
+      "current_market_price": 1615.88,
+      "current_trade_size": 1.26,
+      "current_pl": "-13.9700000000000006394884621840901672840118408203125",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 250,
+    "fields": {
+      "trade_id": 25,
+      "datetime": "2020-11-25T12:30:00",
+      "type": "Entry",
+      "target_market_price": 2798.97,
+      "trade_size_amount": 0.76,
+      "current_market_price": 2798.97,
+      "current_trade_size": 0.76,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 251,
+    "fields": {
+      "trade_id": 25,
+      "datetime": "2020-11-25T16:30:00",
+      "type": "Scale In",
+      "trade_size_amount": 0.26,
+      "target_market_price": null,
+      "current_market_price": 2798.97,
+      "current_trade_size": 1.02,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 252,
+    "fields": {
+      "trade_id": 25,
+      "datetime": "2020-11-25T17:30:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.51,
+      "target_market_price": null,
+      "current_market_price": 2798.97,
+      "current_trade_size": 0.51,
+      "current_pl": "-4.594999999999999751310042484",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 253,
+    "fields": {
+      "trade_id": 25,
+      "datetime": "2020-11-25T20:30:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 2811.06,
+      "current_market_price": 2811.06,
+      "current_trade_size": 0.51,
+      "current_pl": "-9.1899999999999995026200849679298698902130126953125",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 260,
+    "fields": {
+      "trade_id": 26,
+      "datetime": "2022-12-27T02:40:00",
+      "type": "Entry",
+      "target_market_price": 172.26,
+      "trade_size_amount": 1.61,
+      "current_market_price": 172.26,
+      "current_trade_size": 1.61,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 262,
+    "fields": {
+      "trade_id": 26,
+      "datetime": "2022-12-27T06:40:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.81,
+      "target_market_price": null,
+      "current_market_price": 172.26,
+      "current_trade_size": 0.8,
+      "current_pl": "-1.995000000000000106581410364",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 263,
+    "fields": {
+      "trade_id": 26,
+      "datetime": "2022-12-29T15:40:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 169.78,
+      "current_market_price": 169.78,
+      "current_trade_size": 0.8,
+      "current_pl": "-3.9900000000000002131628207280300557613372802734375",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 270,
+    "fields": {
+      "trade_id": 27,
+      "datetime": "2022-09-08T22:11:00",
+      "type": "Entry",
+      "target_market_price": 1998.52,
+      "trade_size_amount": 1.83,
+      "current_market_price": 1998.52,
+      "current_trade_size": 1.83,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 272,
+    "fields": {
+      "trade_id": 27,
+      "datetime": "2022-09-09T00:11:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.92,
+      "target_market_price": null,
+      "current_market_price": 1998.52,
+      "current_trade_size": 0.91,
+      "current_pl": "-14.30000000000000071054273576",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 273,
+    "fields": {
+      "trade_id": 27,
+      "datetime": "2022-09-09T13:11:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 1982.89,
+      "current_market_price": 1982.89,
+      "current_trade_size": 0.91,
+      "current_pl": "-28.60000000000000142108547152020037174224853515625",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 280,
+    "fields": {
+      "trade_id": 28,
+      "datetime": "2022-03-30T22:32:00",
+      "type": "Entry",
+      "target_market_price": 1246.22,
+      "trade_size_amount": 1.72,
+      "current_market_price": 1246.22,
+      "current_trade_size": 1.72,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 282,
+    "fields": {
+      "trade_id": 28,
+      "datetime": "2022-03-31T01:32:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.86,
+      "target_market_price": null,
+      "current_market_price": 1246.22,
+      "current_trade_size": 0.86,
+      "current_pl": "-11.83999999999999985789145285",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 283,
+    "fields": {
+      "trade_id": 28,
+      "datetime": "2022-04-02T17:32:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 1259.99,
+      "current_market_price": 1259.99,
+      "current_trade_size": 0.86,
+      "current_pl": "-23.67999999999999971578290569595992565155029296875",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 290,
+    "fields": {
+      "trade_id": 29,
+      "datetime": "2024-01-29T02:35:00",
+      "type": "Entry",
+      "target_market_price": 1122.82,
+      "trade_size_amount": 0.73,
+      "current_market_price": 1122.82,
+      "current_trade_size": 0.73,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 291,
+    "fields": {
+      "trade_id": 29,
+      "datetime": "2024-01-29T06:35:00",
+      "type": "Scale In",
+      "trade_size_amount": 0.1,
+      "target_market_price": null,
+      "current_market_price": 1122.82,
+      "current_trade_size": 0.83,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 293,
+    "fields": {
+      "trade_id": 29,
+      "datetime": "2024-01-29T07:35:00",
+      "type": "Take Profit",
+      "trade_size_amount": null,
+      "target_market_price": 1133.27,
+      "current_market_price": 1133.27,
+      "current_trade_size": 0.83,
+      "current_pl": "7.62999999999999989341858963598497211933135986328125",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 300,
+    "fields": {
+      "trade_id": 30,
+      "datetime": "2021-01-24T19:23:00",
+      "type": "Entry",
+      "target_market_price": 513.78,
+      "trade_size_amount": 0.41,
+      "current_market_price": 513.78,
+      "current_trade_size": 0.41,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 303,
+    "fields": {
+      "trade_id": 30,
+      "datetime": "2021-01-26T22:23:00",
+      "type": "Take Profit",
+      "trade_size_amount": null,
+      "target_market_price": 514.67,
+      "current_market_price": 514.67,
+      "current_trade_size": 0.41,
+      "current_pl": "0.35999999999999998667732370449812151491641998291015625",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 310,
+    "fields": {
+      "trade_id": 31,
+      "datetime": "2021-09-23T10:09:00",
+      "type": "Entry",
+      "target_market_price": 1476.54,
+      "trade_size_amount": 1.53,
+      "current_market_price": 1476.54,
+      "current_trade_size": 1.53,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 312,
+    "fields": {
+      "trade_id": 31,
+      "datetime": "2021-09-23T15:09:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.77,
+      "target_market_price": null,
+      "current_market_price": 1476.54,
+      "current_trade_size": 0.76,
+      "current_pl": "-14.81000000000000049737991503",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 313,
+    "fields": {
+      "trade_id": 31,
+      "datetime": "2021-09-23T14:09:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 1495.9,
+      "current_market_price": 1495.9,
+      "current_trade_size": 0.76,
+      "current_pl": "-29.620000000000000994759830064140260219573974609375",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 320,
+    "fields": {
+      "trade_id": 32,
+      "datetime": "2020-02-06T08:33:00",
+      "type": "Entry",
+      "target_market_price": 2776.11,
+      "trade_size_amount": 0.65,
+      "current_market_price": 2776.11,
+      "current_trade_size": 0.65,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 330,
+    "fields": {
+      "trade_id": 33,
+      "datetime": "2023-10-18T10:58:00",
+      "type": "Entry",
+      "target_market_price": 1758.56,
+      "trade_size_amount": 0.65,
+      "current_market_price": 1758.56,
+      "current_trade_size": 0.65,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 340,
+    "fields": {
+      "trade_id": 34,
+      "datetime": "2022-01-20T00:35:00",
+      "type": "Entry",
+      "target_market_price": 450.33,
+      "trade_size_amount": 0.28,
+      "current_market_price": 450.33,
+      "current_trade_size": 0.28,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 350,
+    "fields": {
+      "trade_id": 35,
+      "datetime": "2021-05-01T07:13:00",
+      "type": "Entry",
+      "target_market_price": 993.41,
+      "trade_size_amount": 1.18,
+      "current_market_price": 993.41,
+      "current_trade_size": 1.18,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 353,
+    "fields": {
+      "trade_id": 35,
+      "datetime": "2021-05-03T08:13:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 1001.51,
+      "current_market_price": 1001.51,
+      "current_trade_size": 1.18,
+      "current_pl": "-9.5600000000000004973799150320701301097869873046875",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 360,
+    "fields": {
+      "trade_id": 36,
+      "datetime": "2023-10-13T02:20:00",
+      "type": "Entry",
+      "target_market_price": 1414.52,
+      "trade_size_amount": 0.26,
+      "current_market_price": 1414.52,
+      "current_trade_size": 0.26,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 362,
+    "fields": {
+      "trade_id": 36,
+      "datetime": "2023-10-13T11:20:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.13,
+      "target_market_price": null,
+      "current_market_price": 1414.52,
+      "current_trade_size": 0.13,
+      "current_pl": "1.209999999999999964472863212",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 363,
+    "fields": {
+      "trade_id": 36,
+      "datetime": "2023-10-15T04:20:00",
+      "type": "Take Profit",
+      "trade_size_amount": null,
+      "target_market_price": 1423.81,
+      "current_market_price": 1423.81,
+      "current_trade_size": 0.13,
+      "current_pl": "2.4199999999999999289457264239899814128875732421875",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 370,
+    "fields": {
+      "trade_id": 37,
+      "datetime": "2022-07-20T09:12:00",
+      "type": "Entry",
+      "target_market_price": 1773.65,
+      "trade_size_amount": 0.86,
+      "current_market_price": 1773.65,
+      "current_trade_size": 0.86,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 373,
+    "fields": {
+      "trade_id": 37,
+      "datetime": "2022-07-22T21:12:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 1789.64,
+      "current_market_price": 1789.64,
+      "current_trade_size": 0.86,
+      "current_pl": "-13.75",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 380,
+    "fields": {
+      "trade_id": 38,
+      "datetime": "2020-01-11T20:43:00",
+      "type": "Entry",
+      "target_market_price": 2940.61,
+      "trade_size_amount": 1.26,
+      "current_market_price": 2940.61,
+      "current_trade_size": 1.26,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 381,
+    "fields": {
+      "trade_id": 38,
+      "datetime": "2020-01-12T00:43:00",
+      "type": "Scale In",
+      "trade_size_amount": 0.36,
+      "target_market_price": null,
+      "current_market_price": 2940.61,
+      "current_trade_size": 1.62,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 383,
+    "fields": {
+      "trade_id": 38,
+      "datetime": "2020-01-11T23:43:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 2905.55,
+      "current_market_price": 2905.55,
+      "current_trade_size": 1.62,
+      "current_pl": "-44.17999999999999971578290569595992565155029296875",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 390,
+    "fields": {
+      "trade_id": 39,
+      "datetime": "2023-02-06T18:50:00",
+      "type": "Entry",
+      "target_market_price": 1899.56,
+      "trade_size_amount": 0.3,
+      "current_market_price": 1899.56,
+      "current_trade_size": 0.3,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 400,
+    "fields": {
+      "trade_id": 40,
+      "datetime": "2024-02-21T13:15:00",
+      "type": "Entry",
+      "target_market_price": 153.14,
+      "trade_size_amount": 1.95,
+      "current_market_price": 153.14,
+      "current_trade_size": 1.95,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 401,
+    "fields": {
+      "trade_id": 40,
+      "datetime": "2024-02-21T15:15:00",
+      "type": "Scale In",
+      "trade_size_amount": 0.35,
+      "target_market_price": null,
+      "current_market_price": 153.14,
+      "current_trade_size": 2.3,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 403,
+    "fields": {
+      "trade_id": 40,
+      "datetime": "2024-02-24T13:15:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 152.96,
+      "current_market_price": 152.96,
+      "current_trade_size": 2.3,
+      "current_pl": "-0.34999999999999997779553950749686919152736663818359375",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 410,
+    "fields": {
+      "trade_id": 41,
+      "datetime": "2020-10-25T04:04:00",
+      "type": "Entry",
+      "target_market_price": 378.74,
+      "trade_size_amount": 0.76,
+      "current_market_price": 378.74,
+      "current_trade_size": 0.76,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 412,
+    "fields": {
+      "trade_id": 41,
+      "datetime": "2020-10-25T09:04:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.38,
+      "target_market_price": null,
+      "current_market_price": 378.74,
+      "current_trade_size": 0.38,
+      "current_pl": "0.2449999999999999955591079015",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 413,
+    "fields": {
+      "trade_id": 41,
+      "datetime": "2020-10-25T13:04:00",
+      "type": "Take Profit",
+      "trade_size_amount": null,
+      "target_market_price": 379.39,
+      "current_market_price": 379.39,
+      "current_trade_size": 0.38,
+      "current_pl": "0.4899999999999999911182158029987476766109466552734375",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 420,
+    "fields": {
+      "trade_id": 42,
+      "datetime": "2023-10-26T13:34:00",
+      "type": "Entry",
+      "target_market_price": 872.92,
+      "trade_size_amount": 0.43,
+      "current_market_price": 872.92,
+      "current_trade_size": 0.43,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 421,
+    "fields": {
+      "trade_id": 42,
+      "datetime": "2023-10-26T18:34:00",
+      "type": "Scale In",
+      "trade_size_amount": 0.18,
+      "target_market_price": null,
+      "current_market_price": 872.92,
+      "current_trade_size": 0.61,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 422,
+    "fields": {
+      "trade_id": 42,
+      "datetime": "2023-10-26T19:34:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.3,
+      "target_market_price": null,
+      "current_market_price": 872.92,
+      "current_trade_size": 0.31,
+      "current_pl": "-3.615000000000000213162820728",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 423,
+    "fields": {
+      "trade_id": 42,
+      "datetime": "2023-10-28T06:34:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 889.74,
+      "current_market_price": 889.74,
+      "current_trade_size": 0.31,
+      "current_pl": "-7.230000000000000426325641456060111522674560546875",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 430,
+    "fields": {
+      "trade_id": 43,
+      "datetime": "2022-08-19T09:10:00",
+      "type": "Entry",
+      "target_market_price": 1673.43,
+      "trade_size_amount": 0.71,
+      "current_market_price": 1673.43,
+      "current_trade_size": 0.71,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 432,
+    "fields": {
+      "trade_id": 43,
+      "datetime": "2022-08-19T15:10:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.35,
+      "target_market_price": null,
+      "current_market_price": 1673.43,
+      "current_trade_size": 0.36,
+      "current_pl": "-10.78999999999999914734871709",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 433,
+    "fields": {
+      "trade_id": 43,
+      "datetime": "2022-08-20T15:10:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 1703.83,
+      "current_market_price": 1703.83,
+      "current_trade_size": 0.36,
+      "current_pl": "-21.5799999999999982946974341757595539093017578125",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 440,
+    "fields": {
+      "trade_id": 44,
+      "datetime": "2023-06-27T21:27:00",
+      "type": "Entry",
+      "target_market_price": 2847.01,
+      "trade_size_amount": 0.67,
+      "current_market_price": 2847.01,
+      "current_trade_size": 0.67,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 441,
+    "fields": {
+      "trade_id": 44,
+      "datetime": "2023-06-28T01:27:00",
+      "type": "Scale In",
+      "trade_size_amount": 0.08,
+      "target_market_price": null,
+      "current_market_price": 2847.01,
+      "current_trade_size": 0.75,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 442,
+    "fields": {
+      "trade_id": 44,
+      "datetime": "2023-06-28T02:27:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.38,
+      "target_market_price": null,
+      "current_market_price": 2847.01,
+      "current_trade_size": 0.37,
+      "current_pl": "13.57000000000000028421709430",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 443,
+    "fields": {
+      "trade_id": 44,
+      "datetime": "2023-06-29T06:27:00",
+      "type": "Take Profit",
+      "trade_size_amount": null,
+      "target_market_price": 2806.51,
+      "current_market_price": 2806.51,
+      "current_trade_size": 0.37,
+      "current_pl": "27.1400000000000005684341886080801486968994140625",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 450,
+    "fields": {
+      "trade_id": 45,
+      "datetime": "2025-04-12T17:49:00",
+      "type": "Entry",
+      "target_market_price": 1584.19,
+      "trade_size_amount": 1.0,
+      "current_market_price": 1584.19,
+      "current_trade_size": 1.0,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 451,
+    "fields": {
+      "trade_id": 45,
+      "datetime": "2025-04-12T23:49:00",
+      "type": "Scale In",
+      "trade_size_amount": 0.34,
+      "target_market_price": null,
+      "current_market_price": 1584.19,
+      "current_trade_size": 1.34,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 453,
+    "fields": {
+      "trade_id": 45,
+      "datetime": "2025-04-13T07:49:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 1596.5,
+      "current_market_price": 1596.5,
+      "current_trade_size": 1.34,
+      "current_pl": "-12.3100000000000004973799150320701301097869873046875",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 460,
+    "fields": {
+      "trade_id": 46,
+      "datetime": "2024-08-28T07:54:00",
+      "type": "Entry",
+      "target_market_price": 681.19,
+      "trade_size_amount": 0.87,
+      "current_market_price": 681.19,
+      "current_trade_size": 0.87,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 462,
+    "fields": {
+      "trade_id": 46,
+      "datetime": "2024-08-28T14:54:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.43,
+      "target_market_price": null,
+      "current_market_price": 681.19,
+      "current_trade_size": 0.44,
+      "current_pl": "-5.764999999999999680255768908",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 463,
+    "fields": {
+      "trade_id": 46,
+      "datetime": "2024-08-31T03:54:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 694.44,
+      "current_market_price": 694.44,
+      "current_trade_size": 0.44,
+      "current_pl": "-11.5299999999999993605115378159098327159881591796875",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 470,
+    "fields": {
+      "trade_id": 47,
+      "datetime": "2020-09-30T22:45:00",
+      "type": "Entry",
+      "target_market_price": 840.97,
+      "trade_size_amount": 0.24,
+      "current_market_price": 840.97,
+      "current_trade_size": 0.24,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 473,
+    "fields": {
+      "trade_id": 47,
+      "datetime": "2020-09-30T23:45:00",
+      "type": "Take Profit",
+      "trade_size_amount": null,
+      "target_market_price": 838.96,
+      "current_market_price": 838.96,
+      "current_trade_size": 0.24,
+      "current_pl": "0.479999999999999982236431605997495353221893310546875",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 480,
+    "fields": {
+      "trade_id": 48,
+      "datetime": "2021-11-09T03:29:00",
+      "type": "Entry",
+      "target_market_price": 1275.38,
+      "trade_size_amount": 0.95,
+      "current_market_price": 1275.38,
+      "current_trade_size": 0.95,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 483,
+    "fields": {
+      "trade_id": 48,
+      "datetime": "2021-11-11T22:29:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 1263.78,
+      "current_market_price": 1263.78,
+      "current_trade_size": 0.95,
+      "current_pl": "-11.019999999999999573674358543939888477325439453125",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 490,
+    "fields": {
+      "trade_id": 49,
+      "datetime": "2023-12-16T17:07:00",
+      "type": "Entry",
+      "target_market_price": 1432.32,
+      "trade_size_amount": 1.25,
+      "current_market_price": 1432.32,
+      "current_trade_size": 1.25,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 500,
+    "fields": {
+      "trade_id": 50,
+      "datetime": "2022-11-29T18:44:00",
+      "type": "Entry",
+      "target_market_price": 926.05,
+      "trade_size_amount": 0.34,
+      "current_market_price": 926.05,
+      "current_trade_size": 0.34,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 501,
+    "fields": {
+      "trade_id": 50,
+      "datetime": "2022-11-29T23:44:00",
+      "type": "Scale In",
+      "trade_size_amount": 0.15,
+      "target_market_price": null,
+      "current_market_price": 926.05,
+      "current_trade_size": 0.49,
+      "current_pl": "0.00",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 502,
+    "fields": {
+      "trade_id": 50,
+      "datetime": "2022-11-30T00:44:00",
+      "type": "Scale Out",
+      "trade_size_amount": 0.24,
+      "target_market_price": null,
+      "current_market_price": 926.05,
+      "current_trade_size": 0.25,
+      "current_pl": "-1.225000000000000088817841970",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  },
+  {
+    "model": "record.tradesteps",
+    "pk": 503,
+    "fields": {
+      "trade_id": 50,
+      "datetime": "2022-11-30T14:44:00",
+      "type": "Stopped Out",
+      "trade_size_amount": null,
+      "target_market_price": 933.26,
+      "current_market_price": 933.26,
+      "current_trade_size": 0.25,
+      "current_pl": "-2.45000000000000017763568394002504646778106689453125",
+      "pl_if_hit": null,
+      "trade_size_if_hit": null
+    }
+  }
+]

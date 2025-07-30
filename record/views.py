@@ -22,22 +22,58 @@ def dashboard(request):
     for a in accounts_db:
         accounts.append(a.name)
 
-    #DATA REQUESTED FOR GIVEN PERIOD TODO
+    all_trades = Trades.objects.order_by('date_open').all()
+
+    return render(request, "record/dashboard.html", {'new_trade_form': new_trade_form, 'new_account_form': new_account_form, 'accounts': accounts, 'all_trades': all_trades})
+
+
+def loaddata(request):
+    try:
+        time_frame = request.GET['time_frame']
+        date = request.GET['date']
+        account_name = request.GET['account_name']
+        account = Accounts.objects.filter(name=account_name).first()
+    except:
+        return HttpResponse(400)
+
+    #Get trades for the selected time_frame    
+    if time_frame == 'All':
+        time_frame_trades = Trades.objects.order_by('date_open').all() if account_name == 'All' else Trades.objects.filter(account_id=account).order_by('date_open').all()
+    elif time_frame == 'Date Range':
+        start_date, end_date = date.split(',')
+        start_date, end_date = datetime.strptime(start_date,'%d.%m.%Y'), datetime.strptime(end_date,' %d.%m.%Y')
+
+        time_frame_trades = Trades.objects.filter(date_open__gte=start_date, date_open__lte=end_date).order_by('date_open').all() if account_name == 'All' else Trades.objects.filter(account_id=account).filter(date_open__gte=start_date, date_open__lte=end_date).order_by('date_open').all()
+    elif time_frame == 'Yearly':
+        year = date.split('.')[-1]
+
+        time_frame_trades = Trades.objects.filter(date_open__year=year).order_by('date_open').all() if account_name == 'All' else Trades.objects.filter(account_id=account).filter(date_open__year=year).order_by('date_open').all()
+    elif time_frame == 'Monthly':
+        _, month, year = date.split('.')
+
+        time_frame_trades = Trades.objects.filter(date_open__year=year, date_open__month=month).order_by('date_open').all() if account_name == 'All' else Trades.objects.filter(account_id=account).filter(date_open__year=year, date_open__month=month).order_by('date_open').all()
+    elif time_frame == 'Daily':
+        day, month, year = date.split('.')
+
+        time_frame_trades = Trades.objects.filter(date_open__year=year, date_open__month=month, date_open__day=day).order_by('date_open').all() if account_name == 'All' else Trades.objects.filter(account_id=account).filter(date_open__year=year, date_open__month=month, date_open__day=day).order_by('date_open').all()
+    else:
+        return HttpResponse(400)
+
+
+
+    print(len(time_frame_trades))
     #calculate total_pl
     #calculate win rate
     #calculate profit factor
     #get largest and average winning and loosing trade
     #get equity curve
+
     #get adequate ledger
     #get ledger note if any
-    #get trades
 
-    temp_trade = []
-    temp_trades = Trades.objects.all()
-    for t in temp_trades:
-        temp_trade.append(t)
+    #return time_frame_trades
 
-    return render(request, "record/dashboard.html", {'new_trade_form': new_trade_form, 'new_account_form': new_account_form, 'accounts': accounts, 'temp_trade': temp_trade})
+    return HttpResponse(200)
 
 
 def new_trade(request):
