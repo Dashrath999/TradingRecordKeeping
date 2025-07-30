@@ -82,39 +82,45 @@
         <section id="stats" class="px-8 my-5">
             <div class="flex flex-row justify-between">
                 <div class="rounded-lg border-2 border-gray-600 h-60 w-1/5 flex flex-col">
-                    <h2 class="text-gray-400 text-2xl p-2">Total € P/L </h2>
-                    <p class="text-center flex-grow content-center text-6xl text-green-200">1473.02€</p>
+                    <div>
+                        <h2 class="text-gray-400 text-2xl p-2">Total € P/L</h2>
+                        <p id="total_pl" class="text-center flex-grow content-center text-6xl text-green-200">1473.02€</p>
+                    </div>
+                    <div>
+                        <h2 class="text-gray-400 text-2xl p-2">Closed Trades € P/L</h2>
+                        <p id="total_close_pl" class="text-center flex-grow content-center text-6xl text-green-200">1131.21€</p>
+                    </div>
                 </div>
 
                 <div class="rounded-lg border-2 border-gray-600 h-60 w-1/5">
-                    <h2 class="text-gray-400 text-2xl p-2">Win Rate (66.32%)</h2>
+                    <h2 id="win_rate_h2" class="text-gray-400 text-2xl p-2">Win Rate (66.32%)</h2>
                     <div class="h-3/4 w-full"><canvas id="win_rate_chart"></canvas></div>
                 </div>
 
                 <div class="rounded-lg border-2 border-gray-600 h-60 w-1/5 flex flex-col">
                     <h2 class="text-gray-400 text-2xl p-2">Profit Factor</h2>
-                    <div class="text-center flex-grow content-center"><span class="text-6xl text-green-200">2.03€</span> <span class="text-6xl text-gray-200">for every</span> <span class="text-6xl text-red-200">1€</span></div>
+                    <div class="text-center flex-grow content-center"><span id="profit_factor_span" class="text-6xl text-green-200">2.03€</span> <span class="text-6xl text-gray-200">for every</span> <span class="text-6xl text-red-200">1€</span></div>
                 </div>
 
                 <div class="rounded-lg border-2 border-gray-600 h-60 w-1/5 flex flex-wrap">
                     <div class="border-1 border-gray-600 w-1/2 h-1/2 box-border flex flex-col">
                         <h3 class="text-xs px-2 text-green-200">Largest Winning Trade</h3>
-                        <a href="#" class="flex-grow content-center" onclick="open_trade_detail_modal('trade_id')"><p class="text-gray-200 text-4xl text-center">2103€</p></a> 
+                        <a id="lgwt_a" href="#" class="flex-grow content-center"><p id="lgwt_p" class="text-gray-200 text-4xl text-center">2103€</p></a> 
                     </div>
 
                     <div class="border-1 border-gray-600 w-1/2 h-1/2 box-border flex flex-col">
                         <h3 class="text-xs px-2 text-red-200">Largest Loosing Trade</h3>
-                        <a href="#" class="flex-grow content-center" onclick="open_trade_detail_modal('trade_id')"><p class="text-gray-200 text-4xl text-center">605€</p></a> 
+                        <a id="lglt_a" href="#" class="flex-grow content-center"><p id="lglt_p" class="text-gray-200 text-4xl text-center">605€</p></a> 
                     </div>
 
                     <div class="border-1 border-gray-600 w-1/2 h-1/2 box-border flex flex-col">
                         <h3 class="text-xs px-2 text-green-200">Average Winning Trade</h3>
-                        <p class="text-gray-200 text-4xl text-center flex-grow content-center">1040€</p>
+                        <p class="text-gray-200 text-4xl text-center flex-grow content-center" id="avwt_p">1040€</p>
                     </div>
 
                     <div class="border-1 border-gray-600 w-1/2 h-1/2 box-border flex flex-col">
                         <h3 class="text-xs px-2 text-red-200">Average Loosing Trade</h3>
-                        <p class="text-gray-200 text-4xl text-center flex-grow content-center">384€</p>
+                        <p class="text-gray-200 text-4xl text-center flex-grow content-center" id="avlt_p">384€</p>
                     </div>
                 </div>
                 
@@ -482,52 +488,46 @@
         let params = new URLSearchParams({'time_frame': time_frame, 'date': date, 'account_name': account_name}).toString()
         const url = 'loaddata?' + params
 
-        if (time_frame == 'All') {
-            const response = await(fetch(url))
-            if (!response.ok) {
-                alert('error while loading data')
-            }
-
-            const json = await response.json()
-            console.log(json)
-        }
-        else if (time_frame == 'Date Range') {
-            const response = await(fetch(url))
-            if (!response.ok) {
-                alert('error while loading data')
-            }
-
-            const json = await response.json()
-            console.log(json)
-        }
-        else if (time_frame == 'Yearly') {
-            const response = await(fetch(url))
-            if (!response.ok) {
-                alert('error while loading data')
-            }
-
-            const json = await response.json()
-            console.log(json)
-        }
-        else if (time_frame == 'Monthly') {
-            const response = await(fetch(url))
-            if (!response.ok) {
-                alert('error while loading data')
-            }
-
-            const json = await response.json()
-            console.log(json)
-        }
-        else if (time_frame == 'Daily') {
-            const response = await(fetch(url))
-            if (!response.ok) {
-                alert('error while loading data')
-            }
-
-            const json = await response.json()
-            console.log(json)
+        const response = await(fetch(url))
+        if (!response.ok) {
+            alert('error while loading data')
         }
 
+        const json = await response.json()
+        console.log(json)
+
+        //change total pl
+        let total_pl_elem = document.getElementById('total_pl')
+        total_pl_elem.innerHTML = `${json.total_pl} €`
+        if (json.total_pl < 0)
+            total_pl_elem.style.color = 'oklch(.885 .062 18.334)'
+        else
+            total_pl_elem.style.color =  'oklch(.925 .084 155.995)'
+
+        let total_close_trade_elem = document.getElementById('total_close_pl')
+        total_close_trade_elem.innerHTML = `${json.closed_trade_pl} €`
+        if (json.closed_trade_pl < 0)
+            total_close_trade_elem.style.color = 'oklch(.885 .062 18.334)'
+        else
+            total_close_trade_elem.style.color =  'oklch(.925 .084 155.995)'
+
+        //change win_rate_chart
+        document.getElementById('win_rate_h2').innerHTML = `Win Rate (${json.won_trade_percent}%)`
+
+        win_rate_chart.data.datasets[0].data = [json.won_trade_percent, 100-json.won_trade_percent]
+        win_rate_chart.update()
+
+        //change profit_factor
+        document.getElementById('profit_factor_span').innerHTML = `${json.profit_factor}€`
+
+        //change trade stats
+        document.getElementById('lgwt_p').innerHTML = `${json.max_trade[0]}€`
+        document.getElementById('lgwt_a').href = `trade_detail?trade_id=${json.max_trade[1]}`
+        document.getElementById('lglt_p').innerHTML = `${json.min_trade[0]}€`
+        document.getElementById('lglt_a').href = `trade_detail?trade_id=${json.min_trade[1]}`
+        document.getElementById('avwt_p').innerHTML = `${json.avg_win}€`
+        document.getElementById('avlt_p').innerHTML = `${json.avg_lost}€`
+        
 
     }
 
@@ -554,13 +554,13 @@
         'labels': ['Won', 'Lost'],
         datasets: [{
             label: 'Win Rate Ratio',
-            data: [65, 33],
+            data: [50, 50],
             backgroundColor: ['oklch(79.2% 0.209 151.711)', 'oklch(70.4% 0.191 22.216)'],
             hoverOffset: 10
         }]
     }
 
-    new Chart(document.getElementById('win_rate_chart'),
+    let win_rate_chart = new Chart(document.getElementById('win_rate_chart'),
     {
         type: 'doughnut',
         data: win_rate_data,

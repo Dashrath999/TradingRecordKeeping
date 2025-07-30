@@ -9,6 +9,9 @@ from django.core.files import File
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
+from django.db.models import Sum, Max, Min, Avg
+from django.http import JsonResponse
+
 
 
 # BASE_DIR = Path(__file__).resolve().parent.parent
@@ -60,20 +63,44 @@ def loaddata(request):
         return HttpResponse(400)
 
 
+    json_resp = {}
+    #calculate total_pl and closed trades pl
+    json_resp['total_pl'] = round(time_frame_trades.aggregate(total=Sum('pl'))['total'], 2)
+    json_resp['closed_trade_pl'] = round(time_frame_trades.filter(status='Closed').aggregate(total=Sum('pl'))['total'], 2)
 
-    print(len(time_frame_trades))
-    #calculate total_pl
     #calculate win rate
+    time_frame_closed_trades = time_frame_trades.filter(status='Closed')
+    total_nb_trades_closed = len(time_frame_closed_trades)
+    total_nb_trades_win = len(time_frame_closed_trades.filter(trade_is_won=True))
+
+    json_resp['won_trade_percent'] = round((total_nb_trades_win / total_nb_trades_closed) * 100, 2)
+
     #calculate profit factor
+    gross_profit = time_frame_closed_trades.filter(trade_is_won=True).aggregate(total=Sum('pl'))['total']
+    gross_loss = abs(time_frame_closed_trades.filter(trade_is_won=False).aggregate(total=Sum('pl'))['total'])
+
+    json_resp['profit_factor'] = round(gross_profit / gross_loss, 2) if gross_loss != 0 else float('inf')
+
+
     #get largest and average winning and loosing trade
+    max_trade = time_frame_closed_trades.order_by('-pl').first()
+    json_resp['max_trade'] = (round(max_trade.pl, 2), round(max_trade.id, 2))
+
+    min_trade = time_frame_closed_trades.order_by('pl').first()
+    json_resp['min_trade'] = (round(min_trade.pl, 2), round(min_trade.id, 2))
+
+    json_resp['avg_win'] = round(time_frame_closed_trades.filter(trade_is_won=True).aggregate(avg=Avg('pl'))['avg'], 2)
+    json_resp['avg_lost'] = round(time_frame_closed_trades.filter(trade_is_won=False).aggregate(avg=Avg('pl'))['avg'], 2)
+
     #get equity curve
 
     #get adequate ledger
     #get ledger note if any
 
     #return time_frame_trades
+    print(json_resp)
 
-    return HttpResponse(200)
+    return JsonResponse(json_resp)
 
 
 def new_trade(request):
