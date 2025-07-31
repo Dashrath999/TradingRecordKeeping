@@ -14,6 +14,13 @@ from django.http import JsonResponse
 from calendar import monthrange
 
 
+#STILL LEFT TODO
+# EDIT REMOVE TRADE AND TRADE STEPS
+# RECALCULATE STOP LOSS AFTER SCALE IN OR SCALE OUT
+# DON'T REDIRECT WHEN LEDGER NOTE IS ADDEDFOR BETTER UX
+# IN GET EQUITY CURVE, GET THE ACCOUNT BALANCE BEFORE THE FIRST POINT, NOT 0 LIKE NOW
+# KEEP ALL THE GENERATED PLOT AND BUTTON TO SEE THEM ALL
+
 def dashboard(request):
     new_trade_form = NewTradeForm()
     new_account_form = NewAccountForm()
