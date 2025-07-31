@@ -50,6 +50,6 @@ class TradeSteps(models.Model):
 
 class LedgerNotes(models.Model):
     notes = models.TextField()
-    date_start = models.DateField()
-    date_end = models.DateField()
+    date = models.CharField(max_length=30, blank=True, null=True)
+    account_name = models.CharField(max_length=25)
     ledger_timeframe = models.CharField(max_length=20, choices={"All": "All", "Date Range": "Date Range", "Yearly": "Yearly", "Monthly": "Monthly", "Weekly": "Weekly", "Daily": "Daily"})

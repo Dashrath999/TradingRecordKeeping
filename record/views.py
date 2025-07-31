@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 from .forms import NewTradeForm, NewAccountForm, NewTradeStepForm
-from .models import Accounts, Trades, TradeSteps
+from .models import Accounts, Trades, TradeSteps, LedgerNotes
 from decimal import Decimal
 import yfinance as yf
 import mplfinance as mpf
@@ -63,18 +63,17 @@ def loaddata(request):
     else:
         return HttpResponse(400)
 
-
     json_resp = {}
     #calculate total_pl and closed trades pl
-    json_resp['total_pl'] = round(time_frame_trades.aggregate(total=Sum('pl'))['total'], 2) if time_frame_trades.aggregate(total=Sum('pl'))['total'] != None else 'N/A'
-    json_resp['closed_trade_pl'] = round(time_frame_trades.filter(status='Closed').aggregate(total=Sum('pl'))['total'], 2) if time_frame_trades.filter(status='Closed').aggregate(total=Sum('pl'))['total'] != None else 'N/A'
+    json_resp['total_pl'] = s_round(time_frame_trades.aggregate(total=Sum('pl'))['total'], 2) if time_frame_trades.aggregate(total=Sum('pl'))['total'] != None else 'N/A'
+    json_resp['closed_trade_pl'] = s_round(time_frame_trades.filter(status='Closed').aggregate(total=Sum('pl'))['total'], 2) if time_frame_trades.filter(status='Closed').aggregate(total=Sum('pl'))['total'] != None else 'N/A'
 
     #calculate win rate
     time_frame_closed_trades = time_frame_trades.filter(status='Closed')
     total_nb_trades_closed = len(time_frame_closed_trades)
     total_nb_trades_win = len(time_frame_closed_trades.filter(trade_is_won=True))
 
-    json_resp['won_trade_percent'] = round((total_nb_trades_win / total_nb_trades_closed) * 100, 2) if total_nb_trades_closed > 0 else 100
+    json_resp['won_trade_percent'] = s_round((total_nb_trades_win / total_nb_trades_closed) * 100, 2) if total_nb_trades_closed > 0 else 100
 
     #calculate profit factor
     gross_profit = time_frame_closed_trades.filter(trade_is_won=True).aggregate(total=Sum('pl'))['total']
@@ -83,29 +82,136 @@ def loaddata(request):
     if gross_loss == None or gross_profit == None:
         json_resp['profit_factor'] = '∞'
     else:
-        json_resp['profit_factor'] = round(gross_profit / gross_loss, 2) if gross_loss != 0 else '∞'
+        json_resp['profit_factor'] = s_round(gross_profit / gross_loss, 2) if gross_loss != 0 else '∞'
 
 
     #get largest and average winning and loosing trade
     max_trade = time_frame_closed_trades.order_by('-pl').first()
-    json_resp['max_trade'] = (round(max_trade.pl, 2), round(max_trade.id, 2)) if max_trade != None and max_trade.pl > 0 else 'N/A'
+    json_resp['max_trade'] = (s_round(max_trade.pl, 2), s_round(max_trade.id, 2)) if max_trade != None and max_trade.pl > 0 else 'N/A'
 
     min_trade = time_frame_closed_trades.order_by('pl').first()
-    json_resp['min_trade'] = (round(min_trade.pl, 2), round(min_trade.id, 2)) if min_trade != None and min_trade.pl < 0 else 'N/A'
+    json_resp['min_trade'] = (s_round(min_trade.pl, 2), s_round(min_trade.id, 2)) if min_trade != None and min_trade.pl < 0 else 'N/A'
 
-    json_resp['avg_win'] = round(time_frame_closed_trades.filter(trade_is_won=True).aggregate(avg=Avg('pl'))['avg'], 2) if time_frame_closed_trades.filter(trade_is_won=True).aggregate(avg=Avg('pl'))['avg'] != None else 'N/A'
-    json_resp['avg_lost'] = round(time_frame_closed_trades.filter(trade_is_won=False).aggregate(avg=Avg('pl'))['avg'], 2) if time_frame_closed_trades.filter(trade_is_won=False).aggregate(avg=Avg('pl'))['avg'] != None else 'N/A'
+    json_resp['avg_win'] = s_round(time_frame_closed_trades.filter(trade_is_won=True).aggregate(avg=Avg('pl'))['avg'], 2) if time_frame_closed_trades.filter(trade_is_won=True).aggregate(avg=Avg('pl'))['avg'] != None else 'N/A'
+    json_resp['avg_lost'] = s_round(time_frame_closed_trades.filter(trade_is_won=False).aggregate(avg=Avg('pl'))['avg'], 2) if time_frame_closed_trades.filter(trade_is_won=False).aggregate(avg=Avg('pl'))['avg'] != None else 'N/A'
 
     #get equity curve
     json_resp['equity_curve_labels'], json_resp['equity_curve_data'] = get_equity_curve_labels_and_data(time_frame, time_frame_closed_trades, date)
 
     #get adequate ledger
+    json_resp['ledger_header'], json_resp['ledger_rows']  = get_ledger_data(time_frame, time_frame_trades, date)
+    
     #get ledger note if any
+    account_name = 'All' if account == None else account.name
+    print(account_name, time_frame, date)
+    json_resp['ledger_note'] = LedgerNotes.objects.filter(date=date, ledger_timeframe=time_frame, account_name=account_name).first().notes if len(LedgerNotes.objects.filter(date=date, ledger_timeframe=time_frame, account_name=account_name)) > 0 else ''
 
-    #return time_frame_trades
-    print(json_resp)
+    #get time_frame_trades table
 
     return JsonResponse(json_resp)
+
+def new_ledger_note(request):
+    if request.method == 'POST':
+        try:
+            time_frame = request.POST['time_frame']
+            date = None if request.POST['date'] == 'null' else request.POST['date']
+            account = request.POST['account']
+
+            if len(LedgerNotes.objects.filter(date=date, ledger_timeframe=time_frame, account_name=account)) > 0:
+                LedgerNotes.objects.filter(date=date, ledger_timeframe=time_frame, account_name=account).update(notes=request.POST['note'])
+            else:
+                LedgerNotes(notes=request.POST['note'], date=date, ledger_timeframe=time_frame, account_name=account).save()
+
+            # return HttpResponse(200) TODO DON'T REDIRECT FOR BETTER UX
+            return redirect('record-dashboard')
+        
+        except Exception as e:
+            print(request.POST, e)
+            return HttpResponse(400)
+
+
+def get_ledger_data(time_frame, time_frame_trades, date):
+    ledger_rows = []
+
+    if time_frame == 'All' or time_frame == 'Date Range':
+        ledger_header = 'All' if time_frame == 'All' else f'Date Range - {date}'
+        ledger_period_trades = time_frame_trades
+
+        nb_trades = len(ledger_period_trades)
+        nb_w_trades = len(ledger_period_trades.filter(status='Closed').filter(trade_is_won=True))
+        nb_l_trades = len(ledger_period_trades.filter(status='Closed').filter(trade_is_won=False))
+        gross_pl = s_round(ledger_period_trades.aggregate(total=Sum('pl'))['total'])
+        comissions = s_round(ledger_period_trades.aggregate(total=Sum('commission_fee'))['total'])
+        net_pl = s_round(ledger_period_trades.aggregate(total=Sum('pl'))['total']) - s_round(ledger_period_trades.aggregate(total=Sum('commission_fee'))['total'])
+        running_pl = (s_round(ledger_period_trades.aggregate(total=Sum('pl'))['total']) - s_round(ledger_period_trades.aggregate(total=Sum('commission_fee'))['total']))
+
+        ledger_rows.append(['All Trades' if time_frame == 'All' else f'Date Range - {date}', nb_trades, nb_w_trades, nb_l_trades, gross_pl, comissions, net_pl, running_pl])
+
+    elif time_frame == 'Yearly':
+        ledger_header = 'Months'
+        ledger_first_col = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+        
+        day, month, year = date.split('.')
+        previous_running_pl = 0
+        for i, month in enumerate(ledger_first_col):
+            ledger_period_trades = time_frame_trades.filter(date_open__year=year, date_open__month=i+1)
+
+            nb_trades = len(ledger_period_trades)
+            nb_w_trades = len(ledger_period_trades.filter(status='Closed').filter(trade_is_won=True))
+            nb_l_trades = len(ledger_period_trades.filter(status='Closed').filter(trade_is_won=False))
+            gross_pl = s_round(ledger_period_trades.aggregate(total=Sum('pl'))['total'])
+            comissions = s_round(ledger_period_trades.aggregate(total=Sum('commission_fee'))['total'])
+            net_pl = s_round(ledger_period_trades.aggregate(total=Sum('pl'))['total']) - s_round(ledger_period_trades.aggregate(total=Sum('commission_fee'))['total'])
+            running_pl = previous_running_pl + (s_round(ledger_period_trades.aggregate(total=Sum('pl'))['total']) - s_round(ledger_period_trades.aggregate(total=Sum('commission_fee'))['total']))
+
+            ledger_rows.append([month, nb_trades, nb_w_trades, nb_l_trades, gross_pl, comissions, net_pl, running_pl])
+            previous_running_pl = previous_running_pl + (s_round(ledger_period_trades.aggregate(total=Sum('pl'))['total']) - s_round(ledger_period_trades.aggregate(total=Sum('commission_fee'))['total']))
+
+
+    elif time_frame == 'Monthly':
+        ledger_header = 'Days'
+
+        day, month, year = date.split('.')
+        month_range = monthrange(int(year), int(month))[1]
+        ledger_first_col = list(range(1, month_range + 1))
+
+        previous_running_pl = 0
+        for i in ledger_first_col:
+            ledger_period_trades = time_frame_trades.filter(date_open__year=year, date_open__month=month, date_open__day=i)
+
+            nb_trades = len(ledger_period_trades)
+            nb_w_trades = len(ledger_period_trades.filter(status='Closed').filter(trade_is_won=True))
+            nb_l_trades = len(ledger_period_trades.filter(status='Closed').filter(trade_is_won=False))
+            gross_pl = s_round(ledger_period_trades.aggregate(total=Sum('pl'))['total'])
+            comissions = s_round(ledger_period_trades.aggregate(total=Sum('commission_fee'))['total'])
+            net_pl = s_round(ledger_period_trades.aggregate(total=Sum('pl'))['total']) - s_round(ledger_period_trades.aggregate(total=Sum('commission_fee'))['total'])
+            running_pl = previous_running_pl + (s_round(ledger_period_trades.aggregate(total=Sum('pl'))['total']) - s_round(ledger_period_trades.aggregate(total=Sum('commission_fee'))['total']))
+
+            ledger_rows.append([i, nb_trades, nb_w_trades, nb_l_trades, gross_pl, comissions, net_pl, running_pl])
+            previous_running_pl = previous_running_pl + (s_round(ledger_period_trades.aggregate(total=Sum('pl'))['total']) - s_round(ledger_period_trades.aggregate(total=Sum('commission_fee'))['total']))
+
+
+    elif 'Daily':
+        ledger_header = 'Hours'
+        ledger_first_col = list(range(24))
+
+        day, month, year = date.split('.')
+        previous_running_pl = 0
+        for i in ledger_first_col:
+            ledger_period_trades = time_frame_trades.filter(date_open__year=year, date_open__month=month, date_open__day=day, date_open__hour=i)
+
+            nb_trades = len(ledger_period_trades)
+            nb_w_trades = len(ledger_period_trades.filter(status='Closed').filter(trade_is_won=True))
+            nb_l_trades = len(ledger_period_trades.filter(status='Closed').filter(trade_is_won=False))
+            gross_pl = s_round(ledger_period_trades.aggregate(total=Sum('pl'))['total'])
+            comissions = s_round(ledger_period_trades.aggregate(total=Sum('commission_fee'))['total'])
+            net_pl = s_round(ledger_period_trades.aggregate(total=Sum('pl'))['total']) - s_round(ledger_period_trades.aggregate(total=Sum('commission_fee'))['total'])
+            running_pl = previous_running_pl + (s_round(ledger_period_trades.aggregate(total=Sum('pl'))['total']) - s_round(ledger_period_trades.aggregate(total=Sum('commission_fee'))['total']))
+
+            ledger_rows.append([i, nb_trades, nb_w_trades, nb_l_trades, gross_pl, comissions, net_pl, running_pl])
+            previous_running_pl = previous_running_pl + (s_round(ledger_period_trades.aggregate(total=Sum('pl'))['total']) - s_round(ledger_period_trades.aggregate(total=Sum('commission_fee'))['total']))
+
+    return ledger_header, ledger_rows
 
 
 def get_equity_curve_labels_and_data(time_frame, time_frame_closed_trades, date): #TODO GET ACCOUNT BALANCE PRE TIMEFRAME (NOT = 0 LIKE NOW)
@@ -149,7 +255,6 @@ def get_equity_curve_labels_and_data(time_frame, time_frame_closed_trades, date)
         latest_trade_of_hour_account_balance = 0
         for i in range(24):
             labels.append(i)
-            print(len(time_frame_closed_trades.filter(date_closed__year=year, date_closed__month=month, date_closed__day=day, date_closed__hour=i)), year, month, day, i)
             if len(time_frame_closed_trades.filter(date_closed__year=year, date_closed__month=month, date_closed__day=day, date_closed__hour=i)) > 0:
                 latest_trade_of_hour_account_balance = time_frame_closed_trades.filter(date_closed__year=year, date_closed__month=month, date_closed__day=day, date_closed__hour=i).latest('date_closed').account_balance_post_trade
 
@@ -400,3 +505,10 @@ def new_trade_note(request):
         except Exception as e:
             print(request.POST, e)
             return HttpResponse(400)
+
+
+def s_round(value, ndigits=2, fallback=0):
+    try:
+        return round(value, ndigits)
+    except (TypeError, ValueError):
+        return fallback
