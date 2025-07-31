@@ -9,13 +9,10 @@ from django.core.files import File
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
-from django.db.models import Sum, Max, Min, Avg
+from django.db.models import Sum, Avg
 from django.http import JsonResponse
 from calendar import monthrange
 
-
-
-# BASE_DIR = Path(__file__).resolve().parent.parent
 
 def dashboard(request):
     new_trade_form = NewTradeForm()
@@ -103,10 +100,14 @@ def loaddata(request):
     
     #get ledger note if any
     account_name = 'All' if account == None else account.name
-    print(account_name, time_frame, date)
     json_resp['ledger_note'] = LedgerNotes.objects.filter(date=date, ledger_timeframe=time_frame, account_name=account_name).first().notes if len(LedgerNotes.objects.filter(date=date, ledger_timeframe=time_frame, account_name=account_name)) > 0 else ''
 
     #get time_frame_trades table
+    trade_table = []
+    for t in time_frame_trades:
+        trade_table.append([t.id, t.status, t.date_open.strftime("%Y-%m-%d %H:%M"), t.date_closed.strftime("%Y-%m-%d %H:%M") if t.date_closed else '', t.symbol, t.position, t.timeframe, t.trade_size, t.trade_total_cost, t.commission_fee, t.pl, t.account_id.name])
+
+    json_resp['trade_table'] = trade_table
 
     return JsonResponse(json_resp)
 

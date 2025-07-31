@@ -240,47 +240,8 @@
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        {% for t in all_trades %}
-                        <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-600" onclick="window.location = 'trade_detail?trade_id={{t.id}}'">
-                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                {{t.id}}
-                            </th>
-                            <td class="px-6 py-4">
-                                <span class="rounded-lg {% if t.status == 'Closed' %}bg-red-500{% else %}bg-green-500{% endif %} text-gray-200 px-2">{{t.status}}</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                {{t.date_open|date:"d/m/Y H:i"}}
-                            </td>
-                            <td class="px-6 py-4">
-                                {{t.date_closed|date:"d/m/Y H:i"}}
-                            </td>
-                            <td class="px-6 py-4">
-                                {{t.symbol}}
-                            </td>
-                            <td class="px-6 py-4">
-                                <span class="rounded-lg {% if t.position == 'Short' %}bg-red-500{% else %}bg-green-500{% endif %} text-gray-200 px-2">{{t.position}}</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                {{t.timeframe}}
-                            </td>
-                            <td class="px-6 py-4">
-                                {{t.trade_size}}
-                            </td>
-                            <td class="px-6 py-4">
-                                {{t.trade_total_cost}}
-                            </td>
-                            <td class="px-6 py-4">
-                                <span class="text-red-500">{{t.commission_fee}}</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                <span class="{% if t.pl < 0 %}text-red-500{% else %}text-green-500{% endif %}">{{t.pl}}</span>
-                            </td>
-                            <td class="px-6 py-4">
-                                {{t.account_id.name}}
-                            </td>
-                        </tr>
-                        {% endfor %}
+                    <tbody id="trade_table_body">
+                       
                     </tbody>
                 </table>
             </div>
@@ -491,13 +452,46 @@
             })
             html_table += '</tr>'
         });
-
         document.getElementById('ledger_rows').innerHTML = html_table
 
         //get_ledger_notes
         document.getElementById('note').innerHTML = json.ledger_note
-    }
 
+        //get trade_table
+        let trade_table_html = ""
+        json.trade_table.forEach(row => {
+            trade_table_html += `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-600" onclick="window.location = 'trade_detail?trade_id=${row[0]}'">`
+            row.forEach((elem, i) => {
+                if (i == 0)
+                   trade_table_html += `<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">${elem}</th>`
+                else if (i == 1) {
+                    if (elem == 'Closed')
+                        trade_table_html += `<td class="px-6 py-4"><span class="rounded-lg bg-red-500 text-gray-200 px-2">${elem}</span></td>`
+                    else
+                        trade_table_html += `<td class="px-6 py-4"><span class="rounded-lg bg-green-500 text-gray-200 px-2">${elem}</span></td>`
+                }
+                else if (i == 5) {
+                    if (elem == 'Long')
+                        trade_table_html += `<td class="px-6 py-4"><span class="rounded-lg bg-green-500 text-gray-200 px-2">${elem}</span></td>`
+                    else
+                        trade_table_html += `<td class="px-6 py-4"><span class="rounded-lg bg-red-500 text-gray-200 px-2">${elem}</span></td>`
+                }
+                else if (i == 9)
+                    trade_table_html += `<td class="px-6 py-4"><span class="text-red-500">${elem}</span></td>`
+                else if (i == 10) {
+                    if (elem >= 0)
+                        trade_table_html += `<td class="px-6 py-4"><span class="text-green-500">${elem}</span></td>`
+                    else
+                        trade_table_html += `<td class="px-6 py-4"><span class="text-red-500">${elem}</span></td>`
+                }
+                else
+                   trade_table_html += `<td class="px-6 py-4">${elem}</td>`
+            })
+            trade_table_html += '</tr>'
+        })
+        document.getElementById('trade_table_body').innerHTML = trade_table_html
+
+    }
 </script>
 
 <script>
