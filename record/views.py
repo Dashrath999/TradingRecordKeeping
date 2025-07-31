@@ -11,6 +11,7 @@ import numpy as np
 from datetime import datetime, timedelta
 from django.db.models import Sum, Max, Min, Avg
 from django.http import JsonResponse
+from calendar import monthrange
 
 
 
@@ -65,34 +66,38 @@ def loaddata(request):
 
     json_resp = {}
     #calculate total_pl and closed trades pl
-    json_resp['total_pl'] = round(time_frame_trades.aggregate(total=Sum('pl'))['total'], 2)
-    json_resp['closed_trade_pl'] = round(time_frame_trades.filter(status='Closed').aggregate(total=Sum('pl'))['total'], 2)
+    json_resp['total_pl'] = round(time_frame_trades.aggregate(total=Sum('pl'))['total'], 2) if time_frame_trades.aggregate(total=Sum('pl'))['total'] != None else 'N/A'
+    json_resp['closed_trade_pl'] = round(time_frame_trades.filter(status='Closed').aggregate(total=Sum('pl'))['total'], 2) if time_frame_trades.filter(status='Closed').aggregate(total=Sum('pl'))['total'] != None else 'N/A'
 
     #calculate win rate
     time_frame_closed_trades = time_frame_trades.filter(status='Closed')
     total_nb_trades_closed = len(time_frame_closed_trades)
     total_nb_trades_win = len(time_frame_closed_trades.filter(trade_is_won=True))
 
-    json_resp['won_trade_percent'] = round((total_nb_trades_win / total_nb_trades_closed) * 100, 2)
+    json_resp['won_trade_percent'] = round((total_nb_trades_win / total_nb_trades_closed) * 100, 2) if total_nb_trades_closed > 0 else 100
 
     #calculate profit factor
     gross_profit = time_frame_closed_trades.filter(trade_is_won=True).aggregate(total=Sum('pl'))['total']
-    gross_loss = abs(time_frame_closed_trades.filter(trade_is_won=False).aggregate(total=Sum('pl'))['total'])
+    gross_loss = time_frame_closed_trades.filter(trade_is_won=False).aggregate(total=Sum('pl'))['total']
 
-    json_resp['profit_factor'] = round(gross_profit / gross_loss, 2) if gross_loss != 0 else float('inf')
+    if gross_loss == None or gross_profit == None:
+        json_resp['profit_factor'] = '∞'
+    else:
+        json_resp['profit_factor'] = round(gross_profit / gross_loss, 2) if gross_loss != 0 else '∞'
 
 
     #get largest and average winning and loosing trade
     max_trade = time_frame_closed_trades.order_by('-pl').first()
-    json_resp['max_trade'] = (round(max_trade.pl, 2), round(max_trade.id, 2))
+    json_resp['max_trade'] = (round(max_trade.pl, 2), round(max_trade.id, 2)) if max_trade != None else 'N/A'
 
     min_trade = time_frame_closed_trades.order_by('pl').first()
-    json_resp['min_trade'] = (round(min_trade.pl, 2), round(min_trade.id, 2))
+    json_resp['min_trade'] = (round(min_trade.pl, 2), round(min_trade.id, 2)) if min_trade != None else 'N/A'
 
-    json_resp['avg_win'] = round(time_frame_closed_trades.filter(trade_is_won=True).aggregate(avg=Avg('pl'))['avg'], 2)
-    json_resp['avg_lost'] = round(time_frame_closed_trades.filter(trade_is_won=False).aggregate(avg=Avg('pl'))['avg'], 2)
+    json_resp['avg_win'] = round(time_frame_closed_trades.filter(trade_is_won=True).aggregate(avg=Avg('pl'))['avg'], 2) if time_frame_closed_trades.filter(trade_is_won=True).aggregate(avg=Avg('pl'))['avg'] != None else 'N/A'
+    json_resp['avg_lost'] = round(time_frame_closed_trades.filter(trade_is_won=False).aggregate(avg=Avg('pl'))['avg'], 2) if time_frame_closed_trades.filter(trade_is_won=False).aggregate(avg=Avg('pl'))['avg'] != None else 'N/A'
 
     #get equity curve
+    json_resp['equity_curve_labels'], json_resp['equity_curve_data'] = get_equity_curve_labels_and_data(time_frame, time_frame_closed_trades, date)
 
     #get adequate ledger
     #get ledger note if any
@@ -101,6 +106,42 @@ def loaddata(request):
     print(json_resp)
 
     return JsonResponse(json_resp)
+
+
+def get_equity_curve_labels_and_data(time_frame, time_frame_closed_trades, date):
+
+    if time_frame == 'All':
+        pass
+
+    if time_frame == 'Date Range':
+        pass
+
+    if time_frame == 'Yearly':
+        day, month, year = date.split('.')
+        labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+        data = []
+        latest_trade_of_month_account_balance = 0
+        for i in range(1,13):
+            if len(time_frame_closed_trades.filter(date_closed__year=year, date_closed__month=i)) > 0:
+                latest_trade_of_month_account_balance = time_frame_closed_trades.filter(date_closed__year=year, date_closed__month=i).latest('date_closed').account_balance_post_trade
+            
+            data.append(latest_trade_of_month_account_balance)
+
+    if time_frame == 'Monthly':
+        day, month, year = date.split('.')
+        month_range = monthrange(int(year), int(month))[1]
+        labels = list(range(1, month_range + 1))
+
+        data = []
+        latest_trade_of_day_account_balance = 0
+        for i in range(1, month_range + 1):
+            if len(time_frame_closed_trades.filter(date_closed__year=year, date_closed__month=month, date_closed__day=i)) > 0:
+                latest_trade_of_day_account_balance = time_frame_closed_trades.filter(date_closed__year=year, date_closed__month=month, date_closed__day=i).latest('date_closed').account_balance_post_trade
+
+            data.append(latest_trade_of_day_account_balance)
+
+
+    return labels, data
 
 
 def new_trade(request):
@@ -301,6 +342,7 @@ def new_trade_step(request): #TODO RECALCULATE STOP_LOSS AFTER SCALE IN OR SCALE
                 trade_info.status = 'Closed'
                 trade_info.exit_price = f['current_market_price']
                 trade_info.trade_is_won = True if current_pl > 0 else False
+                trade_info.account_balance_post_trade = trade_info.account_id.current_balance + Decimal(current_pl)
 
                 trade_info.save()
 

@@ -528,7 +528,10 @@
         document.getElementById('avwt_p').innerHTML = `${json.avg_win}€`
         document.getElementById('avlt_p').innerHTML = `${json.avg_lost}€`
         
-
+        //change equity curve
+        equity_curve_chart.data.datasets[0].data = json.equity_curve_data
+        equity_curve_chart.data.labels = json.equity_curve_labels
+        equity_curve_chart.update()
     }
 
 </script>
@@ -539,10 +542,12 @@
     let account_links = document.getElementsByClassName('account')
     for(var i = 0; i < account_links.length; i++) {
         var account_link = account_links[i]
-        console.log(this)
         account_link.onclick = function() {
             document.getElementById('account_selector').innerHTML = this.innerHTML
-            //load data if possible
+            let date_val = document.getElementById('date_input').value; 
+            let time_frame_val = document.getElementById('time_frame_selector').innerHTML;
+
+            loaddata(time_frame_val, date_val, this.innerHTML)
         }
     }
 
@@ -573,14 +578,14 @@
         'labels': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
         datasets: [{
             label: 'Equity Curve',
-            data: [65, 59, 80, 81, 56, 55, 40, 35, 37, 43, 47, 66],
+            data: [65, 59, 80, 81, 56, 55, 40, 35, 37, 43, 47, 66, 70 ,77],
             fill: false,
             borderColor: 'rgb(75, 192, 192)',
             tension: 0.1
         }]
     }
 
-    new Chart(document.getElementById('equity_curve_chart'),
+    let equity_curve_chart = new Chart(document.getElementById('equity_curve_chart'),
     {
         type: 'line',
         data: equity_curve_data,
