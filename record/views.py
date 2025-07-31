@@ -88,10 +88,10 @@ def loaddata(request):
 
     #get largest and average winning and loosing trade
     max_trade = time_frame_closed_trades.order_by('-pl').first()
-    json_resp['max_trade'] = (round(max_trade.pl, 2), round(max_trade.id, 2)) if max_trade != None else 'N/A'
+    json_resp['max_trade'] = (round(max_trade.pl, 2), round(max_trade.id, 2)) if max_trade != None and max_trade.pl > 0 else 'N/A'
 
     min_trade = time_frame_closed_trades.order_by('pl').first()
-    json_resp['min_trade'] = (round(min_trade.pl, 2), round(min_trade.id, 2)) if min_trade != None else 'N/A'
+    json_resp['min_trade'] = (round(min_trade.pl, 2), round(min_trade.id, 2)) if min_trade != None and min_trade.pl < 0 else 'N/A'
 
     json_resp['avg_win'] = round(time_frame_closed_trades.filter(trade_is_won=True).aggregate(avg=Avg('pl'))['avg'], 2) if time_frame_closed_trades.filter(trade_is_won=True).aggregate(avg=Avg('pl'))['avg'] != None else 'N/A'
     json_resp['avg_lost'] = round(time_frame_closed_trades.filter(trade_is_won=False).aggregate(avg=Avg('pl'))['avg'], 2) if time_frame_closed_trades.filter(trade_is_won=False).aggregate(avg=Avg('pl'))['avg'] != None else 'N/A'
@@ -108,15 +108,16 @@ def loaddata(request):
     return JsonResponse(json_resp)
 
 
-def get_equity_curve_labels_and_data(time_frame, time_frame_closed_trades, date):
+def get_equity_curve_labels_and_data(time_frame, time_frame_closed_trades, date): #TODO GET ACCOUNT BALANCE PRE TIMEFRAME (NOT = 0 LIKE NOW)
 
-    if time_frame == 'All':
-        pass
+    if time_frame == 'All' or time_frame == 'Date Range':
+        labels = []
+        data = []
+        for t in time_frame_closed_trades:
+            labels.append(t.date_closed)
+            data.append(t.account_balance_post_trade)
 
-    if time_frame == 'Date Range':
-        pass
-
-    if time_frame == 'Yearly':
+    elif time_frame == 'Yearly':
         day, month, year = date.split('.')
         labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
         data = []
@@ -127,7 +128,7 @@ def get_equity_curve_labels_and_data(time_frame, time_frame_closed_trades, date)
             
             data.append(latest_trade_of_month_account_balance)
 
-    if time_frame == 'Monthly':
+    elif time_frame == 'Monthly':
         day, month, year = date.split('.')
         month_range = monthrange(int(year), int(month))[1]
         labels = list(range(1, month_range + 1))
@@ -140,6 +141,19 @@ def get_equity_curve_labels_and_data(time_frame, time_frame_closed_trades, date)
 
             data.append(latest_trade_of_day_account_balance)
 
+    elif time_frame == 'Daily':
+        day, month, year = date.split('.')
+        
+        labels = []
+        data = []
+        latest_trade_of_hour_account_balance = 0
+        for i in range(24):
+            labels.append(i)
+            print(len(time_frame_closed_trades.filter(date_closed__year=year, date_closed__month=month, date_closed__day=day, date_closed__hour=i)), year, month, day, i)
+            if len(time_frame_closed_trades.filter(date_closed__year=year, date_closed__month=month, date_closed__day=day, date_closed__hour=i)) > 0:
+                latest_trade_of_hour_account_balance = time_frame_closed_trades.filter(date_closed__year=year, date_closed__month=month, date_closed__day=day, date_closed__hour=i).latest('date_closed').account_balance_post_trade
+
+            data.append(latest_trade_of_hour_account_balance)
 
     return labels, data
 
