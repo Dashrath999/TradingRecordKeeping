@@ -15,6 +15,8 @@ from calendar import monthrange
 
 
 #STILL LEFT TODO
+# DEPLOY (+ LOGIN IF NEEDED)
+# MAKE RESPONSIVE
 # EDIT REMOVE TRADE AND TRADE STEPS
 # RECALCULATE STOP LOSS AFTER SCALE IN OR SCALE OUT
 # DON'T REDIRECT WHEN LEDGER NOTE IS ADDEDFOR BETTER UX
@@ -483,7 +485,7 @@ def new_trade_step(request): #TODO RECALCULATE STOP_LOSS AFTER SCALE IN OR SCALE
                 #CREATE SCREENSHOT
                 create_screenshot(trade_info)
 
-            return redirect(f'/trade_detail?trade_id={request.POST['trade_id']}')
+            return redirect(f'/trade_detail?trade_id={request.POST["trade_id"]}')
         else:
             return HttpResponse(400)
 
@@ -509,7 +511,7 @@ def new_trade_note(request):
     if request.method == 'POST':
         try:
             Trades.objects.filter(id=request.POST['trade_id']).update(notes=request.POST['note'])
-            return redirect(f'/trade_detail?trade_id={request.POST['trade_id']}')
+            return redirect(f'/trade_detail?trade_id={request.POST["trade_id"]}')
         except Exception as e:
             print(request.POST, e)
             return HttpResponse(400)
