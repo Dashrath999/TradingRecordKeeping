@@ -26,14 +26,14 @@
 
     <body class="bg-gray-900">
 
-        <section id="filter_section" class="flex justify-between  w-full h-24 px-8 my-5">
-            <div class="flex space-x-3">
-                    <div class="dropdown inline-block relative">
-                        <button class="rounded-lg border-2 border-gray-600 text-gray-200 font-semibold h-12 px-4 rounded inline-flex items-center">
-                        <span id="time_frame_selector" class="mr-1">All</span>
+        <section id="filter_section" class="flex-col md:flex-row flex justify-between  w-full md:h-24 px-8 my-5">
+            <div class="flex md:space-x-3 space-y-4 md:space-y-1 flex-col md:flex-row mb-3 md:mb-0">
+                    <div class="dropdown inline-block relative sm:max-md:w-full">
+                        <button class="w-full md:w-auto rounded-lg border-2 border-gray-600 text-gray-200 font-semibold h-12 px-4 rounded inline-flex items-center">
+                        <span id="time_frame_selector" class="mx-auto md:mr-1">All</span>
                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/> </svg>
                         </button>
-                        <ul class="dropdown-menu absolute hidden text-gray-700 pt-1">
+                        <ul class="md:w-auto w-full dropdown-menu absolute hidden text-gray-700 pt-1 z-10">
                             <li class="" onclick="selectTimeFrame('All')"><a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">All</a></li>
                             <li class="" onclick="selectTimeFrame('Date Range')"><a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Date Range</a></li>
                             <li class="" onclick="selectTimeFrame('Yearly')"><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Yearly</a></li>
@@ -44,15 +44,15 @@
                     </div>
 
                     <div>
-                        <input id="date_input" class="h-12 rounded-lg border-2 border-gray-600 text-gray-200 text-center" />
+                        <input id="date_input" class="h-12 rounded-lg border-2 border-gray-600 text-gray-200 text-center w-full md:w-auto" />
                     </div>
 
-                    <div class="dropdown inline-block relative">
-                        <button class="rounded-lg border-2 border-gray-600 text-gray-200 font-semibold h-12 px-4 rounded inline-flex items-center">
-                        <span id="account_selector" class="mr-1">All</span>
+                    <div class="dropdown inline-block relative sm:max-md:w-full">
+                        <button class="w-full md:w-auto rounded-lg border-2 border-gray-600 text-gray-200 font-semibold h-12 px-4 rounded inline-flex items-center">
+                        <span id="account_selector" class="mx-auto md:mr-1">All</span>
                         <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/> </svg>
                         </button>
-                        <ul class="dropdown-menu absolute hidden text-gray-700 pt-1">
+                        <ul class="dropdown-menu absolute hidden text-gray-700 pt-1 z-10">
                             <li class=""><a class="account rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">All</a></li>
                             <!-- <li class=""><a class="account  bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">1st Paper Trading</a></li>
                             <li class=""><a class="account  bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Binance</a></li> -->
@@ -73,15 +73,15 @@
 
             </div>
             
-            <div class="flex space-x-3">
-                <button data-modal-target="new_trade_modal" data-modal-toggle="new_trade_modal" class="h-12 rounded-lg px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300">New Trade</button>
+            <div class="flex space-x-3 flex-col md:flex-row md:mt-0 mt-5">
+                <button data-modal-target="new_trade_modal" data-modal-toggle="new_trade_modal" class="h-12 rounded-lg px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300 mb-3 md:mb-0 w-full md:w-auto">New Trade</button>
                 <button class="h-12 rounded-lg px-4 py-2 border-2 border-gray-600 text-gray-200 hover:bg-gray-600 hover:text-gray-100 duration-300">See Open Trades</button>
             </div>            
         </section>
 
         <section id="stats" class="px-8 my-5">
-            <div class="flex flex-row justify-between">
-                <div class="rounded-lg border-2 border-gray-600 h-60 w-1/5 flex flex-col">
+            <div class="flex flex-col md:flex-row justify-between">
+                <div class="rounded-lg border-2 border-gray-600 h-60 md:w-1/5 flex flex-col w-full mb-3 md:mb-0">
                     <div>
                         <h2 class="text-gray-400 text-2xl p-2">Total € P/L</h2>
                         <p id="total_pl" class="text-center flex-grow content-center text-6xl text-green-200">1473.02€</p>
@@ -92,17 +92,17 @@
                     </div>
                 </div>
 
-                <div class="rounded-lg border-2 border-gray-600 h-60 w-1/5">
+                <div class="rounded-lg border-2 border-gray-600 h-60 md:w-1/5 w-full mb-3 md:mb-0">
                     <h2 id="win_rate_h2" class="text-gray-400 text-2xl p-2">Win Rate (66.32%)</h2>
                     <div class="h-3/4 w-full"><canvas id="win_rate_chart"></canvas></div>
                 </div>
 
-                <div class="rounded-lg border-2 border-gray-600 h-60 w-1/5 flex flex-col">
+                <div class="rounded-lg border-2 border-gray-600 h-60 md:w-1/5 w-full mb-3 md:mb-0 flex flex-col">
                     <h2 class="text-gray-400 text-2xl p-2">Profit Factor</h2>
                     <div class="text-center flex-grow content-center"><span id="profit_factor_span" class="text-6xl text-green-200">2.03€</span> <span class="text-6xl text-gray-200">for every</span> <span class="text-6xl text-red-200">1€</span></div>
                 </div>
 
-                <div class="rounded-lg border-2 border-gray-600 h-60 w-1/5 flex flex-wrap">
+                <div class="rounded-lg border-2 border-gray-600 h-60 md:w-1/5 w-full mb-3 md:mb-0 flex flex-wrap">
                     <div class="border-1 border-gray-600 w-1/2 h-1/2 box-border flex flex-col">
                         <h3 class="text-xs px-2 text-green-200">Largest Winning Trade</h3>
                         <a id="lgwt_a" href="#" class="flex-grow content-center"><p id="lgwt_p" class="text-gray-200 text-4xl text-center">2103€</p></a> 
@@ -271,10 +271,10 @@
         </div>
 
         <!-- Add account form modal -->
-        <div id="new_account_modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative p-4 w-full mx-8">
+        <div id="new_account_modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] h-auto md:max-h-full">
+            <div class="relative p-4 w-full md:mx-8 mx-2">
                 <!-- Modal content -->
-                <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+                <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700 overflow-y-auto">
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
                         <h3 class="text-xl font-semibold text-gray-200 dark:text-white">
