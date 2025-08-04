@@ -12,9 +12,12 @@ from datetime import datetime, timedelta
 from django.db.models import Sum, Avg
 from django.http import JsonResponse
 from calendar import monthrange
+from twelvedata import TDClient
+
 
 
 #STILL LEFT TODO
+#CHANGE YFINANCE
 # EDIT REMOVE TRADE AND TRADE STEPS
 # RECALCULATE STOP LOSS AFTER SCALE IN OR SCALE OUT
 # DON'T REDIRECT WHEN LEDGER NOTE IS ADDEDFOR BETTER UX
@@ -297,20 +300,18 @@ def new_trade(request):
 
 
 def create_screenshot(trade_info):
-    ticker = yf.Ticker(trade_info.symbol)
+    # ticker = yf.Ticker(trade_info.symbol)
+    td = TDClient(apikey="ec8e9db4055444fda2f7d8b26e619fc2")
+    data = td.time_series(symbol=trade_info.symbol, interval=trade_info.timeframe, outputsize=50)
+    data = data.as_pandas()
+    data = data[::-1]
     ap = []
-
-    #get time period to look at
-    time_delta_days ={"1w": 21, "1d": 5, "4h": 3, "2h": 2, "1h": 2, "30m": 1, "15m": 1, "5m": 1}
-    start_date = trade_info.date_open - timedelta(days=time_delta_days[trade_info.timeframe])
-    end_date = datetime.now() if trade_info.date_closed == None else trade_info.date_closed + timedelta(days=time_delta_days[trade_info.timeframe])
-    data = ticker.history(start=start_date.strftime("%Y-%m-%d"), end=end_date.strftime("%Y-%m-%d"), interval=trade_info.timeframe)
 
     #make entry signal addplot
     entry_signal = [trade_info.date_open.strftime("%Y-%m-%d")]
     entry_series = pd.Series(index=data.index, data=np.nan)
     if entry_signal[0] in data.index:
-        entry_series[entry_signal[0]] = data.loc[entry_signal[0], "Close"]
+        entry_series[entry_signal[0]] = data.loc[entry_signal[0], "close"]
     ap.append(mpf.make_addplot(entry_series, type='scatter', markersize=100, marker='o', color='g'))
 
     #create sl and tp horizontal line
@@ -334,32 +335,32 @@ def create_screenshot(trade_info):
             scale_in_signal = [t.datetime.strftime("%Y-%m-%d")]
             scale_in_series = pd.Series(index=data.index, data=np.nan)
             if scale_in_signal[0] in data.index:
-                scale_in_series[scale_in_signal[0]] = data.loc[scale_in_signal[0], "Close"]
+                scale_in_series[scale_in_signal[0]] = data.loc[scale_in_signal[0], "close"]
             ap.append(mpf.make_addplot(scale_in_series, type='scatter', markersize=100, marker='^', color='c'))
 
         elif t.type == 'Scale Out':
             scale_out_signal = [t.datetime.strftime("%Y-%m-%d")]
             scale_out_series = pd.Series(index=data.index, data=np.nan)
             if scale_out_signal[0] in data.index:
-                scale_out_series[scale_out_signal[0]] = data.loc[scale_out_signal[0], "Close"]
+                scale_out_series[scale_out_signal[0]] = data.loc[scale_out_signal[0], "close"]
             ap.append(mpf.make_addplot(scale_out_series, type='scatter', markersize=100, marker='v', color='c'))
 
         elif t.type == 'Stopped Out':
             stopped_out_signal = [t.datetime.strftime("%Y-%m-%d")]
             stopped_out_series = pd.Series(index=data.index, data=np.nan)
             if stopped_out_signal[0] in data.index:
-                stopped_out_series[stopped_out_signal[0]] = data.loc[stopped_out_signal[0], "Close"]
+                stopped_out_series[stopped_out_signal[0]] = data.loc[stopped_out_signal[0], "close"]
             ap.append(mpf.make_addplot(stopped_out_series, type='scatter', markersize=100, marker='x', color='r'))
 
         elif t.type == 'Take Profit':
             take_profit_signal = [t.datetime.strftime("%Y-%m-%d")]
             take_profit_series = pd.Series(index=data.index, data=np.nan)
             if take_profit_signal[0] in data.index:
-                take_profit_series[take_profit_signal[0]] = data.loc[take_profit_signal[0], "Close"]
+                take_profit_series[take_profit_signal[0]] = data.loc[take_profit_signal[0], "close"]
             ap.append(mpf.make_addplot(take_profit_series, type='scatter', markersize=100, marker='x', color='g'))
 
     #save plot to filesystem #TODO KEEP ALL THE GENERATED PLOTS AND GIVE OPTION TO USER TO SEE THEM
-    mpf.plot(data, type='candle', style='yahoo', volume=True, savefig=f'trade_screenshots/trade_{trade_info.id}', addplot=ap, hlines=hlines, alines=dict(alines=trailling_stop_points, colors=['c']))
+    mpf.plot(data, type='candle', style='yahoo', volume=True if "volume" in data.columns else False, savefig=f'trade_screenshots/trade_{trade_info.id}', addplot=ap, hlines=hlines, alines=dict(alines=trailling_stop_points, colors=['c']))
     path = Path(f'trade_screenshots/trade_{trade_info.id}.png')
     with path.open(mode="rb") as file:
         Trades.objects.filter(id=trade_info.id).update(screenshot=File(file, name=path.name)) 

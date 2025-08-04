@@ -18,7 +18,7 @@ class Trades(models.Model):
     status = models.CharField(max_length=10, choices={"Open": "Open", "Closed": "Closed"}, default="Open")
     account_id = models.ForeignKey(Accounts, on_delete=models.CASCADE)
     position = models.CharField(max_length=10, choices={"Short": "Short", "Long": "Long"})
-    timeframe = models.CharField(max_length=10, choices={"1w": "1w", "1d": "1d", "4h": "4h", "2h": "2h", "1h": "1h", "30m": "30m", "15m": "15m", "5m": "5m"})
+    timeframe = models.CharField(max_length=10, choices={"1month":"1month", "1week": "1week", "1day": "1day", "4h": "4h", "2h": "2h", "1h": "1h", "30m": "30m", "15m": "15m", "5m": "5m"})
     symbol = models.CharField(max_length=10)
     entry_price = models.FloatField()
     trade_size = models.FloatField()
