@@ -4,244 +4,394 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Trading Record</title>
         <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
         <script src="https://cdn.jsdelivr.net/npm/air-datepicker@3.6.0/air-datepicker.min.js"></script>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/air-datepicker@3.6.0/air-datepicker.min.css">
 
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" integrity="sha512-CQBWl4fJHWbryGE+Pc7UAxWMUMNMWzWxF4SQo9CgkJIN1kx6djDQZjh3Y8SZ1d+6I+1zze6Z7kHXO7q3UyZAWw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" integrity="sha512-CQBWl4fJHWbryGE+Pc7UAxWMUMNMWzWxF4SQo9CgkJIN1kx6djDQZjh3Y8SZ1d+6I+1zze6Z7kHXO7q3UyZAWw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
         <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
-
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
         <style>
-            .dropdown:focus-within .dropdown-menu {
-            /* @apply block; */
-            display:block;
+            :root {
+                --bg: #0A0E16;
+                --surface: #101624;
+                --surface-2: #16203466;
+                --surface-3: #1A2436;
+                --border: #1E2A3F;
+                --text: #E8ECF4;
+                --muted: #8A94AC;
+                --accent: #EBA53A;
+                --accent-soft: #EBA53A22;
+                --green: #34D399;
+                --green-soft: #34D39922;
+                --red: #F87171;
+                --red-soft: #F8717122;
             }
+
+            body {
+                background: var(--bg);
+                color: var(--text);
+                font-family: 'Space Grotesk', system-ui, sans-serif;
+            }
+
+            .mono { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; }
+
+            /* ---------- section headers ---------- */
+            .eyebrow {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: .65rem;
+                letter-spacing: .3em;
+                text-transform: uppercase;
+                color: var(--accent);
+            }
+            .section-title { font-size: 1.4rem; font-weight: 600; color: var(--text); }
+            .rule { height: 1px; background: linear-gradient(to right, var(--border), transparent); }
+
+            /* ---------- cards ---------- */
+            .card {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                border-radius: 14px;
+            }
+            .kpi-label {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: .62rem;
+                letter-spacing: .18em;
+                text-transform: uppercase;
+                color: var(--muted);
+            }
+            .kpi-value {
+                font-family: 'JetBrains Mono', monospace;
+                font-variant-numeric: tabular-nums;
+                font-weight: 600;
+                font-size: clamp(1.4rem, 2.2vw, 2rem);
+                line-height: 1.1;
+            }
+            .kpi-sub { font-family: 'JetBrains Mono', monospace; font-variant-numeric: tabular-nums; font-weight: 500; font-size: 1.15rem; }
+
+            .pos { color: var(--green); }
+            .neg { color: var(--red); }
+
+            /* ---------- tables ---------- */
+            .tbl { width: 100%; border-collapse: collapse; font-size: .82rem; }
+            .tbl thead th {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: .62rem;
+                font-weight: 500;
+                letter-spacing: .14em;
+                text-transform: uppercase;
+                color: var(--muted);
+                text-align: left;
+                padding: .65rem 1rem;
+                border-bottom: 1px solid var(--border);
+                white-space: nowrap;
+            }
+            .tbl tbody td, .tbl tbody th {
+                font-family: 'JetBrains Mono', monospace;
+                font-variant-numeric: tabular-nums;
+                font-weight: 400;
+                color: var(--text);
+                text-align: left;
+                padding: .7rem 1rem;
+                border-bottom: 1px solid var(--border);
+                white-space: nowrap;
+            }
+            .tbl tbody tr { transition: background .15s; }
+            .tbl tbody tr:hover { background: var(--surface-2); }
+            .tbl tbody tr.clickable { cursor: pointer; }
+
+            .badge {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: .68rem;
+                padding: .15rem .55rem;
+                border-radius: 999px;
+                border: 1px solid;
+            }
+            .badge-green { color: var(--green); border-color: var(--green); background: var(--green-soft); }
+            .badge-red { color: var(--red); border-color: var(--red); background: var(--red-soft); }
+
+            /* ---------- controls ---------- */
+            .btn-accent {
+                background: var(--accent);
+                color: #14100A;
+                font-weight: 600;
+                border-radius: 10px;
+                transition: filter .2s;
+            }
+            .btn-accent:hover { filter: brightness(1.12); }
+            .btn-ghost {
+                border: 1px solid var(--border);
+                color: var(--text);
+                border-radius: 10px;
+                background: var(--surface);
+                transition: border-color .2s, background .2s;
+            }
+            .btn-ghost:hover { border-color: var(--accent); background: var(--surface-3); }
+
+            .control {
+                background: var(--surface);
+                border: 1px solid var(--border);
+                color: var(--text);
+                border-radius: 10px;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: .82rem;
+            }
+            .control:focus-within, .control:focus { border-color: var(--accent); outline: none; }
+
+            .dropdown:focus-within .dropdown-menu { display: block; }
+            .dropdown-menu {
+                background: var(--surface-3);
+                border: 1px solid var(--border);
+                border-radius: 10px;
+                overflow: hidden;
+                min-width: 100%;
+                box-shadow: 0 12px 32px #00000088;
+            }
+            .dropdown-menu a, .dropdown-menu button {
+                font-family: 'JetBrains Mono', monospace;
+                font-size: .8rem;
+                color: var(--text);
+            }
+            .dropdown-menu li > a:hover, .dropdown-menu li:hover { background: var(--accent-soft); }
+
+            /* ---------- forms (Django-rendered widgets + note) ---------- */
+            form p { margin-bottom: .85rem; }
+            form p label {
+                display: block;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: .62rem;
+                letter-spacing: .14em;
+                text-transform: uppercase;
+                color: var(--muted);
+                margin-bottom: .3rem;
+            }
+            form input:not(.hidden):not([type=hidden]), form select, form textarea {
+                background: var(--surface-3) !important;
+                border: 1px solid var(--border) !important;
+                color: var(--text) !important;
+                border-radius: 8px !important;
+                width: 100%;
+                padding: .55rem .75rem;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: .82rem;
+            }
+            form input:focus, form select:focus, form textarea:focus {
+                border-color: var(--accent) !important;
+                outline: none !important;
+                box-shadow: none !important;
+            }
+
+            .modal-surface {
+                background: var(--surface) !important;
+                border: 1px solid var(--border);
+                border-radius: 14px;
+            }
+            .modal-surface .modal-head { border-bottom: 1px solid var(--border) !important; }
+
+            /* air-datepicker dark */
+            .air-datepicker { background: var(--surface-3); border: 1px solid var(--border); color: var(--text); --adp-color: var(--text); --adp-background-color: var(--surface-3); --adp-day-name-color: var(--accent); --adp-cell-background-color-selected: var(--accent); --adp-cell-background-color-selected-hover: var(--accent); --adp-color-current-date: var(--accent); --adp-background-color-hover: #ffffff14; --adp-color-secondary: var(--muted); --adp-nav-arrow-color: var(--muted); --adp-border-color-inner: var(--border); }
         </style>
     </head>
 
-    <body class="bg-gray-900">
+    <body>
 
-        <section id="filter_section" class="flex-col md:flex-row flex justify-between  w-full md:h-24 px-8 my-5">
-            <div class="flex md:space-x-3 space-y-4 md:space-y-1 flex-col md:flex-row mb-3 md:mb-0">
+        <!-- ================= header ================= -->
+        <header class="flex items-center justify-between px-8 py-4" style="border-bottom: 1px solid var(--border)">
+            <div class="flex items-center gap-3">
+                <div class="mono font-semibold text-sm px-2 py-1 rounded" style="background: var(--accent); color: #14100A;">TRK</div>
+                <div>
+                    <div class="font-semibold tracking-wide">Trading Record</div>
+                    <div class="mono" style="font-size:.6rem; letter-spacing:.22em; color: var(--muted)">JOURNAL &middot; LEDGER &middot; EQUITY</div>
+                </div>
+            </div>
+            <div class="hidden md:block mono" style="font-size:.7rem; color: var(--muted)" id="header_clock"></div>
+        </header>
+
+        <!-- ================= filters ================= -->
+        <section id="filter_section" class="flex-col md:flex-row flex justify-between w-full px-8 my-6 gap-4">
+            <div class="flex md:space-x-3 space-y-4 md:space-y-0 flex-col md:flex-row">
                     <div class="dropdown inline-block relative sm:max-md:w-full">
-                        <button class="w-full md:w-auto rounded-lg border-2 border-gray-600 text-gray-200 font-semibold h-12 px-4 rounded inline-flex items-center">
+                        <button class="control w-full md:w-auto font-semibold h-12 px-4 inline-flex items-center">
+                        <span class="mono mr-2" style="font-size:.6rem; color: var(--muted)">PERIOD</span>
                         <span id="time_frame_selector" class="mx-auto md:mr-1">All</span>
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/> </svg>
+                        <svg class="fill-current h-4 w-4" style="color: var(--accent)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/> </svg>
                         </button>
-                        <ul class="md:w-auto w-full dropdown-menu absolute hidden text-gray-700 pt-1 z-10">
-                            <li class="" onclick="selectTimeFrame('All')"><a class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">All</a></li>
-                            <li class="" onclick="selectTimeFrame('Date Range')"><a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Date Range</a></li>
-                            <li class="" onclick="selectTimeFrame('Yearly')"><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Yearly</a></li>
-                            <li class="" onclick="selectTimeFrame('Monthly')"><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Monthly</a></li>
-                            <!-- <li class=""><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Weekly</a></li> -->
-                            <li class="" onclick="selectTimeFrame('Daily')"><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Daily</a></li>
+                        <ul class="md:w-auto w-full dropdown-menu absolute hidden pt-0 z-10 mt-1">
+                            <li class="" onclick="selectTimeFrame('All')"><a class="py-2 px-4 block whitespace-no-wrap" href="#">All</a></li>
+                            <li class="" onclick="selectTimeFrame('Date Range')"><a class="py-2 px-4 block whitespace-no-wrap" href="#">Date Range</a></li>
+                            <li class="" onclick="selectTimeFrame('Yearly')"><a class="py-2 px-4 block whitespace-no-wrap" href="#">Yearly</a></li>
+                            <li class="" onclick="selectTimeFrame('Monthly')"><a class="py-2 px-4 block whitespace-no-wrap" href="#">Monthly</a></li>
+                            <li class="" onclick="selectTimeFrame('Daily')"><a class="py-2 px-4 block whitespace-no-wrap" href="#">Daily</a></li>
                         </ul>
                     </div>
 
                     <div>
-                        <input id="date_input" class="h-12 rounded-lg border-2 border-gray-600 text-gray-200 text-center w-full md:w-auto" />
+                        <input id="date_input" class="control h-12 text-center w-full md:w-auto px-3" placeholder="—" />
                     </div>
 
                     <div class="dropdown inline-block relative sm:max-md:w-full">
-                        <button class="w-full md:w-auto rounded-lg border-2 border-gray-600 text-gray-200 font-semibold h-12 px-4 rounded inline-flex items-center">
+                        <button class="control w-full md:w-auto font-semibold h-12 px-4 inline-flex items-center">
+                        <span class="mono mr-2" style="font-size:.6rem; color: var(--muted)">ACCOUNT</span>
                         <span id="account_selector" class="mx-auto md:mr-1">All</span>
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/> </svg>
+                        <svg class="fill-current h-4 w-4" style="color: var(--accent)" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/> </svg>
                         </button>
-                        <ul class="dropdown-menu absolute hidden text-gray-700 pt-1 z-10">
-                            <li class=""><a class="account rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">All</a></li>
-                            <!-- <li class=""><a class="account  bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">1st Paper Trading</a></li>
-                            <li class=""><a class="account  bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">Binance</a></li> -->
+                        <ul class="dropdown-menu absolute hidden pt-0 z-10 mt-1">
+                            <li class=""><a class="account py-2 px-4 block whitespace-no-wrap" href="#">All</a></li>
 
                             {% for a in accounts %}
-                                <li class=""><a class="account  bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">{{a}}</a></li>
+                                <li class=""><a class="account py-2 px-4 block whitespace-no-wrap" href="#">{{a}}</a></li>
                             {% endfor %}
 
-                            <li class="flex justify-center bg-gray-200 rounded-b" data-modal-target="new_account_modal" data-modal-toggle="new_account_modal">
-                                <button type="button" class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="gray" class="size-6 mr-1">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                                    </svg>
+                            <li class="flex justify-center" data-modal-target="new_account_modal" data-modal-toggle="new_account_modal" style="border-top: 1px solid var(--border)">
+                                <button type="button" class="py-2 px-4 block whitespace-no-wrap w-full" style="color: var(--accent)">
+                                    + Add account
                                 </button>
                             </li>
                         </ul>
                     </div>
 
             </div>
-            
-            <div class="flex space-x-3 flex-col md:flex-row md:mt-0 mt-5">
-                <button data-modal-target="new_trade_modal" data-modal-toggle="new_trade_modal" class="h-12 rounded-lg px-4 py-2 bg-blue-500 text-blue-100 hover:bg-blue-600 duration-300 mb-3 md:mb-0 w-full md:w-auto">New Trade</button>
-                <button class="h-12 rounded-lg px-4 py-2 border-2 border-gray-600 text-gray-200 hover:bg-gray-600 hover:text-gray-100 duration-300">See Open Trades</button>
-            </div>            
+
+            <div class="flex space-x-3 flex-col md:flex-row md:mt-0 gap-y-3 md:gap-y-0">
+                <button data-modal-target="new_trade_modal" data-modal-toggle="new_trade_modal" class="btn-accent h-12 px-5 py-2 w-full md:w-auto">New trade</button>
+                <button class="btn-ghost h-12 px-5 py-2 w-full md:w-auto">Open trades</button>
+            </div>
         </section>
 
-        <section id="stats" class="px-8 my-5">
-            <div class="flex flex-col md:flex-row justify-between">
-                <div class="rounded-lg border-2 border-gray-600 h-60 md:w-1/5 flex flex-col w-full mb-3 md:mb-0">
+        <!-- ================= stats ================= -->
+        <section id="stats" class="px-8 my-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+
+                <div class="card p-5 flex flex-col justify-between gap-4">
                     <div>
-                        <h2 class="text-gray-400 text-2xl p-2">Total € P/L</h2>
-                        <p id="total_pl" class="text-center flex-grow content-center text-6xl text-green-200">1473.02€</p>
+                        <h2 class="kpi-label mb-2">Total &euro; P/L</h2>
+                        <p id="total_pl" class="kpi-value pos">&mdash;</p>
                     </div>
                     <div>
-                        <h2 class="text-gray-400 text-2xl p-2">Closed Trades € P/L</h2>
-                        <p id="total_close_pl" class="text-center flex-grow content-center text-6xl text-green-200">1131.21€</p>
+                        <h2 class="kpi-label mb-2">Closed trades &euro; P/L</h2>
+                        <p id="total_close_pl" class="kpi-sub pos">&mdash;</p>
                     </div>
                 </div>
 
-                <div class="rounded-lg border-2 border-gray-600 h-60 md:w-1/5 w-full mb-3 md:mb-0">
-                    <h2 id="win_rate_h2" class="text-gray-400 text-2xl p-2">Win Rate (66.32%)</h2>
-                    <div class="h-3/4 w-full"><canvas id="win_rate_chart"></canvas></div>
+                <div class="card p-5">
+                    <h2 id="win_rate_h2" class="kpi-label mb-2">Win Rate</h2>
+                    <div class="w-full" style="height: 9.5rem"><canvas id="win_rate_chart"></canvas></div>
                 </div>
 
-                <div class="rounded-lg border-2 border-gray-600 h-60 md:w-1/5 w-full mb-3 md:mb-0 flex flex-col">
-                    <h2 class="text-gray-400 text-2xl p-2">Profit Factor</h2>
-                    <div class="text-center flex-grow content-center"><span id="profit_factor_span" class="text-6xl text-green-200">2.03€</span> <span class="text-6xl text-gray-200">for every</span> <span class="text-6xl text-red-200">1€</span></div>
-                </div>
-
-                <div class="rounded-lg border-2 border-gray-600 h-60 md:w-1/5 w-full mb-3 md:mb-0 flex flex-wrap">
-                    <div class="border-1 border-gray-600 w-1/2 h-1/2 box-border flex flex-col">
-                        <h3 class="text-xs px-2 text-green-200">Largest Winning Trade</h3>
-                        <a id="lgwt_a" href="#" class="flex-grow content-center"><p id="lgwt_p" class="text-gray-200 text-4xl text-center">2103€</p></a> 
-                    </div>
-
-                    <div class="border-1 border-gray-600 w-1/2 h-1/2 box-border flex flex-col">
-                        <h3 class="text-xs px-2 text-red-200">Largest Loosing Trade</h3>
-                        <a id="lglt_a" href="#" class="flex-grow content-center"><p id="lglt_p" class="text-gray-200 text-4xl text-center">605€</p></a> 
-                    </div>
-
-                    <div class="border-1 border-gray-600 w-1/2 h-1/2 box-border flex flex-col">
-                        <h3 class="text-xs px-2 text-green-200">Average Winning Trade</h3>
-                        <p class="text-gray-200 text-4xl text-center flex-grow content-center" id="avwt_p">1040€</p>
-                    </div>
-
-                    <div class="border-1 border-gray-600 w-1/2 h-1/2 box-border flex flex-col">
-                        <h3 class="text-xs px-2 text-red-200">Average Loosing Trade</h3>
-                        <p class="text-gray-200 text-4xl text-center flex-grow content-center" id="avlt_p">384€</p>
+                <div class="card p-5 flex flex-col">
+                    <h2 class="kpi-label mb-2">Profit factor</h2>
+                    <div class="flex-grow content-center text-center">
+                        <span id="profit_factor_span" class="kpi-value pos">&mdash;</span>
+                        <div class="mono mt-2" style="font-size:.68rem; color: var(--muted)">&euro; won for every 1&euro; lost</div>
                     </div>
                 </div>
-                
+
+                <div class="card grid grid-cols-2">
+                    <div class="p-4 flex flex-col" style="border-right: 1px solid var(--border); border-bottom: 1px solid var(--border)">
+                        <h3 class="kpi-label" style="color: var(--green)">Largest win</h3>
+                        <a id="lgwt_a" href="#" class="flex-grow content-center"><p id="lgwt_p" class="kpi-sub text-center">&mdash;</p></a>
+                    </div>
+                    <div class="p-4 flex flex-col" style="border-bottom: 1px solid var(--border)">
+                        <h3 class="kpi-label" style="color: var(--red)">Largest loss</h3>
+                        <a id="lglt_a" href="#" class="flex-grow content-center"><p id="lglt_p" class="kpi-sub text-center">&mdash;</p></a>
+                    </div>
+                    <div class="p-4 flex flex-col" style="border-right: 1px solid var(--border)">
+                        <h3 class="kpi-label" style="color: var(--green)">Average win</h3>
+                        <p class="kpi-sub text-center flex-grow content-center" id="avwt_p">&mdash;</p>
+                    </div>
+                    <div class="p-4 flex flex-col">
+                        <h3 class="kpi-label" style="color: var(--red)">Average loss</h3>
+                        <p class="kpi-sub text-center flex-grow content-center" id="avlt_p">&mdash;</p>
+                    </div>
+                </div>
 
             </div>
 
-            <div class="border-gray-600 rounded-lg border-2 h-105 w-full mt-5">
-                <h2 class="text-gray-400 text-2xl p-2">Equity Curve</h2>
-                <div class="h-3/4 w-full"><canvas id="equity_curve_chart"></canvas></div>
+            <div class="card w-full mt-4 p-5" style="height: 26rem">
+                <div class="flex items-baseline justify-between mb-3">
+                    <h2 class="kpi-label">Equity curve</h2>
+                    <span class="mono" style="font-size:.62rem; color: var(--muted)">net of fees</span>
+                </div>
+                <div class="w-full" style="height: calc(100% - 2.2rem)"><canvas id="equity_curve_chart"></canvas></div>
             </div>
 
         </section>
 
+        <!-- ================= ledger ================= -->
+        <section id="ledger" class="px-8 mt-14 mb-10">
+            <div class="eyebrow mb-1">Ledger</div>
+            <h1 class="section-title mb-2">Period breakdown</h1>
+            <div class="rule mb-5"></div>
 
-        <section id="ledger" class="px-8 my-15">
-            <h1 class="text-6xl text-gray-200 my-5">Ledger</h1>            
-
-            <div class="relative overflow-x-auto">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <div class="card relative overflow-x-auto">
+                <table class="tbl">
+                    <thead>
                         <tr>
-                            <th id="ledger_header" scope="col" class="px-6 py-3">
-                                Month
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                # Trades
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                # Winning
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                # Losing
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Gross € P/L
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Commision €
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Net € P/L
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Running € P/L
-                            </th>
+                            <th id="ledger_header" scope="col">Month</th>
+                            <th scope="col"># Trades</th>
+                            <th scope="col"># Winning</th>
+                            <th scope="col"># Losing</th>
+                            <th scope="col">Gross &euro; P/L</th>
+                            <th scope="col">Commission &euro;</th>
+                            <th scope="col">Net &euro; P/L</th>
+                            <th scope="col">Running &euro; P/L</th>
                         </tr>
                     </thead>
                     <tbody id="ledger_rows">
-                        
+
                     </tbody>
                 </table>
             </div>
 
-            <form action="new_ledger_note" method="post">
+            <form id="ledger_note_form" action="new_ledger_note" method="post">
                 {% csrf_token %}
                 <input type="text" class="hidden" name="time_frame" id="new_ledger_note_time_frame">
                 <input type="text" class="hidden" name="date" id="new_ledger_note_date">
                 <input type="text" class="hidden" name="account" id="new_ledger_note_account">
-                <textarea id="note" name="note" rows="4" class="mt-5 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Analyse your trading period"></textarea>
-                <div class="w-full flex justify-center">
-                    <button type="submit" class="mt-3 text-white bg-blue-500 hover:bg-blue-500 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mr-1">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                    </svg>
-                        Ajouter une note
+                <textarea id="note" name="note" rows="4" class="mt-5 block p-3 w-full" placeholder="Analyse your trading period &mdash; what worked, what to stop, focus for next period"></textarea>
+                <div class="w-full flex justify-end">
+                    <button type="submit" class="btn-accent mt-3 text-sm px-5 py-2.5 inline-flex items-center">
+                        Save note
                     </button>
                 </div>
             </form>
 
-            
-            
         </section>
 
+        <!-- ================= trades ================= -->
+        <section id="trades" class="px-8 mt-14 mb-16">
+            <div class="eyebrow mb-1">Trades</div>
+            <h1 class="section-title mb-2">All positions in period</h1>
+            <div class="rule mb-5"></div>
 
-        <section id="trades"class="px-8 my-15">
-            <h1 class="text-6xl text-gray-200 my-5">Trades</h1>            
-
-            <div class="relative overflow-x-auto">
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <div class="card relative overflow-x-auto">
+                <table class="tbl">
+                    <thead>
                         <tr>
-                            <th scope="col" class="px-6 py-3">
-                                Trade ID
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Status
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Open Datetime
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Close Datetime
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Symbol
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Position
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Timeframe
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Trade Size
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Trade Price in €
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Commision
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Net € P/L
-                            </th>
-                            <th scope="col" class="px-6 py-3">
-                                Account
-                            </th>
+                            <th scope="col">ID</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Opened</th>
+                            <th scope="col">Closed</th>
+                            <th scope="col">Symbol</th>
+                            <th scope="col">Position</th>
+                            <th scope="col">TF</th>
+                            <th scope="col">Size</th>
+                            <th scope="col">Cost &euro;</th>
+                            <th scope="col">Fee &euro;</th>
+                            <th scope="col">P/L &euro;</th>
+                            <th scope="col">Account</th>
                         </tr>
                     </thead>
                     <tbody id="trade_table_body">
-                       
+
                     </tbody>
                 </table>
             </div>
@@ -250,22 +400,20 @@
         <!-- Add trade form modal -->
         <div id="new_trade_modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative p-4 w-full mx-8">
-                <!-- Modal content -->
-                <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
-                    <!-- Modal header -->
-                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-                        <h3 class="text-xl font-semibold text-gray-200 dark:text-white">
-                            New Trade
-                        </h3>
+                <div class="relative modal-surface shadow-sm">
+                    <div class="modal-head flex items-center justify-between p-4 md:p-5 rounded-t">
+                        <div>
+                            <div class="eyebrow">New trade</div>
+                            <h3 class="text-lg font-semibold">Position size computes from risk % and stop</h3>
+                        </div>
                     </div>
-                    <!-- Modal body -->
-                    <div class="p-4 md:p-5 space-y-4 text-gray-200">
+                    <div class="p-4 md:p-5 space-y-4">
                         <form method="post" action="new_trade">
                             {% csrf_token %}
                             {{ new_trade_form.as_p }}
-                            <button class="mt-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" type="submit">Send</button>
+                            <button class="btn-accent mt-3 text-sm px-5 py-2.5" type="submit">Open trade</button>
                         </form>
-                    </div>       
+                    </div>
                 </div>
             </div>
         </div>
@@ -273,28 +421,23 @@
         <!-- Add account form modal -->
         <div id="new_account_modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] h-auto md:max-h-full">
             <div class="relative p-4 w-full md:mx-8 mx-2">
-                <!-- Modal content -->
-                <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700 overflow-y-auto">
-                    <!-- Modal header -->
-                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-                        <h3 class="text-xl font-semibold text-gray-200 dark:text-white">
-                            New Account
-                        </h3>
+                <div class="relative modal-surface shadow-sm overflow-y-auto">
+                    <div class="modal-head flex items-center justify-between p-4 md:p-5 rounded-t">
+                        <div>
+                            <div class="eyebrow">New account</div>
+                            <h3 class="text-lg font-semibold">Add a trading account</h3>
+                        </div>
                     </div>
-                    <!-- Modal body -->
                     <div class="p-4 md:p-5 space-y-4">
                         <form method="post" action="new_account">
                             {% csrf_token %}
                             {{ new_account_form.as_p }}
-                            <button type="submit">Send</button>
+                            <button class="btn-accent mt-3 text-sm px-5 py-2.5" type="submit">Create account</button>
                         </form>
-                    </div>       
+                    </div>
                 </div>
             </div>
         </div>
-
-        <!-- See Open trade modal -->
-
 
     </body>
 
@@ -314,19 +457,24 @@
 
     new AirDatepicker("#new_trade_open_date_input", {locale: en_loc, timepicker: true, dateFormat: "MM/dd/yyyy", timeFormat: "HH:mm:00"})
 
-
+    //header clock
+    const clock = document.getElementById('header_clock')
+    if (clock) {
+        const tick = () => clock.innerHTML = new Date().toLocaleString('fr-BE', {dateStyle: 'medium', timeStyle: 'medium'})
+        tick(); setInterval(tick, 1000)
+    }
 
     selectTimeFrame('All')
 
     function selectTimeFrame(time_frame) {
         document.getElementById('time_frame_selector').innerHTML = time_frame
         document.getElementById('date_input').value = ""
-        
+
         let account_name = document.getElementById('account_selector').innerHTML
 
 
         //TODO DELETE OLD AIR_DATEPICKER
-        
+
         switch (time_frame) {
             case "All":
                 document.getElementById('new_ledger_note_time_frame').value = time_frame
@@ -340,11 +488,11 @@
             case "Date Range":
                 document.getElementById('date_input').disabled = false
                 new AirDatepicker("#date_input", {locale: en_loc, range: true})
-                
+
                 //create call back for the calendar selection to load data
                 document.getElementById('date_input').onchange = function() {
                     let date_val = document.getElementById('date_input').value
-                    
+
                     if (date_val.indexOf(",") > -1) {
                         //load data
                         document.getElementById('new_ledger_note_time_frame').value = time_frame
@@ -367,7 +515,7 @@
             case "Monthly":
                 document.getElementById('date_input').disabled = false
                 new AirDatepicker("#date_input", {locale: en_loc, view: "months", minView: 'months'})
-                
+
                 //create call back for the calendar selection to load data
                 document.getElementById('date_input').onchange = function() {let date_val = document.getElementById('date_input').value;document.getElementById('new_ledger_note_time_frame').value = time_frame; document.getElementById('new_ledger_note_date').value = date_val;document.getElementById('new_ledger_note_account').value = account_name; loaddata(time_frame, date_val, account_name)}
 
@@ -386,9 +534,27 @@
         }
     }
 
-    // async function save_new_note(time_frame, date, account_name,) {
-        
-    // }
+    document.getElementById('ledger_note_form').addEventListener('submit', async (e) => {
+        e.preventDefault()
+        const form = e.target
+        const btn = form.querySelector('button[type=submit]')
+        const resp = await fetch('new_ledger_note', {method: 'POST', body: new FormData(form)})
+        const original = btn.innerHTML
+        if (resp.ok) {
+            btn.innerHTML = 'Saved &check;'
+        } else {
+            btn.innerHTML = 'Error &cross;'
+        }
+        setTimeout(() => { btn.innerHTML = original }, 1500)
+    })
+
+    const GREEN = getComputedStyle(document.documentElement).getPropertyValue('--green').trim()
+    const RED = getComputedStyle(document.documentElement).getPropertyValue('--red').trim()
+
+    function signClass(elem, value) {
+        elem.classList.remove('pos', 'neg')
+        elem.classList.add(value < 0 ? 'neg' : 'pos')
+    }
 
     async function loaddata(time_frame, date, account_name) {
         let params = new URLSearchParams({'time_frame': time_frame, 'date': date, 'account_name': account_name}).toString()
@@ -405,35 +571,36 @@
         //change total pl
         let total_pl_elem = document.getElementById('total_pl')
         total_pl_elem.innerHTML = `${json.total_pl} €`
-        if (json.total_pl < 0)
-            total_pl_elem.style.color = 'oklch(.885 .062 18.334)'
-        else
-            total_pl_elem.style.color =  'oklch(.925 .084 155.995)'
+        signClass(total_pl_elem, json.total_pl)
 
         let total_close_trade_elem = document.getElementById('total_close_pl')
         total_close_trade_elem.innerHTML = `${json.closed_trade_pl} €`
-        if (json.closed_trade_pl < 0)
-            total_close_trade_elem.style.color = 'oklch(.885 .062 18.334)'
-        else
-            total_close_trade_elem.style.color =  'oklch(.925 .084 155.995)'
+        signClass(total_close_trade_elem, json.closed_trade_pl)
 
         //change win_rate_chart
         document.getElementById('win_rate_h2').innerHTML = `Win Rate (${json.won_trade_percent}%)`
 
-        win_rate_chart.data.datasets[0].data = [json.won_trade_percent, 100-json.won_trade_percent]
+        if (json.won_trade_percent === 'N/A') {
+            document.getElementById('win_rate_h2').innerHTML = 'Win Rate (N/A)'
+            win_rate_chart.data.datasets[0].data = [0, 100]
+        } else {
+            win_rate_chart.data.datasets[0].data = [json.won_trade_percent, 100-json.won_trade_percent]
+        }
         win_rate_chart.update()
 
         //change profit_factor
-        document.getElementById('profit_factor_span').innerHTML = `${json.profit_factor}€`
+        let pf_elem = document.getElementById('profit_factor_span')
+        pf_elem.innerHTML = `${json.profit_factor}`
+        signClass(pf_elem, json.profit_factor === '∞' ? 1 : json.profit_factor - 1)
 
         //change trade stats
-        document.getElementById('lgwt_p').innerHTML = `${json.max_trade[0]}€`
-        document.getElementById('lgwt_a').href = `trade_detail?trade_id=${json.max_trade[1]}`
-        document.getElementById('lglt_p').innerHTML = `${json.min_trade[0]}€`
-        document.getElementById('lglt_a').href = `trade_detail?trade_id=${json.min_trade[1]}`
+        document.getElementById('lgwt_p').innerHTML = json.max_trade === 'N/A' ? 'N/A' : `${json.max_trade[0]}€`
+        if (json.max_trade !== 'N/A') document.getElementById('lgwt_a').href = `trade_detail?trade_id=${json.max_trade[1]}`
+        document.getElementById('lglt_p').innerHTML = json.min_trade === 'N/A' ? 'N/A' : `${json.min_trade[0]}€`
+        if (json.min_trade !== 'N/A') document.getElementById('lglt_a').href = `trade_detail?trade_id=${json.min_trade[1]}`
         document.getElementById('avwt_p').innerHTML = `${json.avg_win}€`
         document.getElementById('avlt_p').innerHTML = `${json.avg_lost}€`
-        
+
         //change equity curve
         equity_curve_chart.data.datasets[0].data = json.equity_curve_data
         equity_curve_chart.data.labels = json.equity_curve_labels
@@ -443,12 +610,16 @@
         document.getElementById('ledger_header').innerHTML = json.ledger_header
         let html_table = ""
         json.ledger_rows.forEach(row => {
-            html_table += '<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-600">'
+            html_table += '<tr>'
             row.forEach((elem, i) => {
                 if (i == 0)
-                   html_table += `<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">${elem}</th>`
+                   html_table += `<th scope="row" style="color: var(--muted)">${elem}</th>`
+                else if (i >= 4) {
+                    const cls = (i == 5) ? '' : (elem < 0 ? 'neg' : (elem > 0 ? 'pos' : ''))
+                    html_table += `<td class="${cls}">${elem}</td>`
+                }
                 else
-                   html_table += `<td class="px-6 py-4">${elem}</td>`
+                   html_table += `<td>${elem}</td>`
             })
             html_table += '</tr>'
         });
@@ -460,32 +631,32 @@
         //get trade_table
         let trade_table_html = ""
         json.trade_table.forEach(row => {
-            trade_table_html += `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-600" onclick="window.location = 'trade_detail?trade_id=${row[0]}'">`
+            trade_table_html += `<tr class="clickable" onclick="window.location = 'trade_detail?trade_id=${row[0]}'">`
             row.forEach((elem, i) => {
                 if (i == 0)
-                   trade_table_html += `<th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">${elem}</th>`
+                   trade_table_html += `<th scope="row" style="color: var(--muted)">#${elem}</th>`
                 else if (i == 1) {
                     if (elem == 'Closed')
-                        trade_table_html += `<td class="px-6 py-4"><span class="rounded-lg bg-red-500 text-gray-200 px-2">${elem}</span></td>`
+                        trade_table_html += `<td><span class="badge badge-red">${elem}</span></td>`
                     else
-                        trade_table_html += `<td class="px-6 py-4"><span class="rounded-lg bg-green-500 text-gray-200 px-2">${elem}</span></td>`
+                        trade_table_html += `<td><span class="badge badge-green">${elem}</span></td>`
                 }
                 else if (i == 5) {
                     if (elem == 'Long')
-                        trade_table_html += `<td class="px-6 py-4"><span class="rounded-lg bg-green-500 text-gray-200 px-2">${elem}</span></td>`
+                        trade_table_html += `<td><span class="badge badge-green">${elem}</span></td>`
                     else
-                        trade_table_html += `<td class="px-6 py-4"><span class="rounded-lg bg-red-500 text-gray-200 px-2">${elem}</span></td>`
+                        trade_table_html += `<td><span class="badge badge-red">${elem}</span></td>`
                 }
                 else if (i == 9)
-                    trade_table_html += `<td class="px-6 py-4"><span class="text-red-500">${elem}</span></td>`
+                    trade_table_html += `<td style="color: var(--muted)">${elem}</td>`
                 else if (i == 10) {
                     if (elem >= 0)
-                        trade_table_html += `<td class="px-6 py-4"><span class="text-green-500">${elem}</span></td>`
+                        trade_table_html += `<td class="pos">${elem}</td>`
                     else
-                        trade_table_html += `<td class="px-6 py-4"><span class="text-red-500">${elem}</span></td>`
+                        trade_table_html += `<td class="neg">${elem}</td>`
                 }
                 else
-                   trade_table_html += `<td class="px-6 py-4">${elem}</td>`
+                   trade_table_html += `<td>${elem}</td>`
             })
             trade_table_html += '</tr>'
         })
@@ -515,14 +686,29 @@
 </script>
 
 <script>
+    //CHART THEME
+    Chart.defaults.color = '#8A94AC'
+    Chart.defaults.font.family = "'JetBrains Mono', monospace"
+    Chart.defaults.font.size = 10
+    Chart.defaults.borderColor = 'rgba(138, 148, 172, 0.10)'
+    Chart.defaults.plugins.tooltip.backgroundColor = '#1A2436'
+    Chart.defaults.plugins.tooltip.borderColor = '#1E2A3F'
+    Chart.defaults.plugins.tooltip.borderWidth = 1
+    Chart.defaults.plugins.tooltip.titleColor = '#E8ECF4'
+    Chart.defaults.plugins.tooltip.bodyColor = '#E8ECF4'
+    Chart.defaults.plugins.tooltip.padding = 10
+    Chart.defaults.plugins.tooltip.cornerRadius = 8
+
     //WIN RATE CHART
     let win_rate_data = {
         'labels': ['Won', 'Lost'],
         datasets: [{
             label: 'Win Rate Ratio',
             data: [50, 50],
-            backgroundColor: ['oklch(79.2% 0.209 151.711)', 'oklch(70.4% 0.191 22.216)'],
-            hoverOffset: 10
+            backgroundColor: ['#34D399', '#F87171'],
+            borderColor: '#101624',
+            borderWidth: 3,
+            hoverOffset: 6
         }]
     }
 
@@ -530,31 +716,54 @@
     {
         type: 'doughnut',
         data: win_rate_data,
-        options: {responsive: true, maintainAspectRatio: false}
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            cutout: '72%',
+            plugins: { legend: { display: false } }
+        }
     })
 
 
     //EQUITY CURVE CHART
+    const eq_canvas = document.getElementById('equity_curve_chart')
+    const eq_ctx = eq_canvas.getContext('2d')
+    const eq_gradient = eq_ctx.createLinearGradient(0, 0, 0, 360)
+    eq_gradient.addColorStop(0, 'rgba(235, 165, 58, 0.28)')
+    eq_gradient.addColorStop(1, 'rgba(235, 165, 58, 0.0)')
+
     let equity_curve_data = {
-        'labels': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        'labels': [],
         datasets: [{
-            label: 'Equity Curve',
-            data: [65, 59, 80, 81, 56, 55, 40, 35, 37, 43, 47, 66, 70 ,77],
-            fill: false,
-            borderColor: 'rgb(75, 192, 192)',
-            tension: 0.1
+            label: 'Equity',
+            data: [],
+            fill: true,
+            backgroundColor: eq_gradient,
+            borderColor: '#EBA53A',
+            borderWidth: 2,
+            pointRadius: 0,
+            pointHoverRadius: 4,
+            pointHoverBackgroundColor: '#EBA53A',
+            tension: 0.25
         }]
     }
 
-    let equity_curve_chart = new Chart(document.getElementById('equity_curve_chart'),
+    let equity_curve_chart = new Chart(eq_canvas,
     {
         type: 'line',
         data: equity_curve_data,
-        options: {responsive: true, maintainAspectRatio: false}
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode: 'index', intersect: false },
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { grid: { display: false }, ticks: { maxTicksLimit: 12 } },
+                y: { grid: { color: 'rgba(138, 148, 172, 0.08)' }, ticks: { callback: (v) => v + ' €' } }
+            }
+        }
     })
 
 </script>
 
 </html>
-
-

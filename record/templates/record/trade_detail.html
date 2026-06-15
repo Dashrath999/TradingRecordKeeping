@@ -14,9 +14,95 @@
         <link href="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/flowbite@3.1.2/dist/flowbite.min.js"></script>
 
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+        <style>
+            :root {
+                --bg: #0A0E16;
+                --surface: #101624;
+                --surface-3: #1A2436;
+                --border: #1E2A3F;
+                --text: #E8ECF4;
+                --muted: #8A94AC;
+                --accent: #EBA53A;
+                --green: #34D399;
+                --green-soft: #34D39922;
+                --red: #F87171;
+                --red-soft: #F8717122;
+            }
+            body { background: var(--bg) !important; color: var(--text); font-family: 'Space Grotesk', system-ui, sans-serif; }
+
+            .eyebrow { font-family: 'JetBrains Mono', monospace; font-size: .65rem; letter-spacing: .3em; text-transform: uppercase; color: var(--accent); }
+            .section-title { font-size: 1.4rem; font-weight: 600; color: var(--text); }
+            .rule { height: 1px; background: linear-gradient(to right, var(--border), transparent); }
+
+            /* restyle existing Flowbite tables to the terminal look */
+            table { border-collapse: collapse; }
+            table thead, table thead tr, table thead th { background: transparent !important; }
+            table thead th {
+                font-family: 'JetBrains Mono', monospace !important;
+                font-size: .62rem !important;
+                font-weight: 500 !important;
+                letter-spacing: .14em;
+                color: var(--muted) !important;
+                border-bottom: 1px solid var(--border);
+            }
+            table tbody tr, table tbody th, table tbody td { background: transparent !important; border-color: var(--border) !important; }
+            table tbody th, table tbody td {
+                font-family: 'JetBrains Mono', monospace !important;
+                font-variant-numeric: tabular-nums;
+                font-weight: 400 !important;
+                color: var(--text) !important;
+            }
+            table tbody tr:hover { background: #16203466 !important; }
+            .relative.overflow-x-auto { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; }
+
+            /* status / position pills -> outlined badges */
+            span.bg-green-500 { background: var(--green-soft) !important; color: var(--green) !important; border: 1px solid var(--green); font-family: 'JetBrains Mono', monospace; font-size: .68rem; border-radius: 999px; padding: .15rem .55rem; }
+            span.bg-red-500 { background: var(--red-soft) !important; color: var(--red) !important; border: 1px solid var(--red); font-family: 'JetBrains Mono', monospace; font-size: .68rem; border-radius: 999px; padding: .15rem .55rem; }
+            .text-green-500 { color: var(--green) !important; }
+            .text-red-500 { color: var(--red) !important; }
+            .text-amber-400 { color: var(--accent) !important; }
+
+            /* forms (Django widgets + note) */
+            form p { margin-bottom: .85rem; }
+            form p label { display: block; font-family: 'JetBrains Mono', monospace; font-size: .62rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: .3rem; }
+            form input:not(.hidden):not([type=hidden]), form select, form textarea {
+                background: var(--surface-3) !important;
+                border: 1px solid var(--border) !important;
+                color: var(--text) !important;
+                border-radius: 8px !important;
+                font-family: 'JetBrains Mono', monospace;
+                font-size: .82rem;
+            }
+            form input:focus, form select:focus, form textarea:focus { border-color: var(--accent) !important; outline: none !important; box-shadow: none !important; }
+
+            /* modals + primary buttons */
+            .dark\:bg-gray-700.relative, div.relative.bg-white { background: var(--surface) !important; border: 1px solid var(--border); border-radius: 14px; }
+            button[type=submit].bg-blue-700, button.bg-blue-500, .bg-blue-500[type=button] {
+                background: var(--accent) !important; color: #14100A !important; font-weight: 600;
+            }
+            button[type=submit].bg-blue-700:hover, button.bg-blue-500:hover { filter: brightness(1.12); }
+
+            /* air-datepicker dark */
+            .air-datepicker { background: var(--surface-3); border: 1px solid var(--border); --adp-color: var(--text); --adp-background-color: var(--surface-3); --adp-day-name-color: var(--accent); --adp-cell-background-color-selected: var(--accent); --adp-cell-background-color-selected-hover: var(--accent); --adp-color-current-date: var(--accent); --adp-background-color-hover: #ffffff14; --adp-color-secondary: var(--muted); --adp-nav-arrow-color: var(--muted); --adp-border-color-inner: var(--border); }
+        </style>
     </head>
 
-    <body class="bg-gray-900">
+    <body>
+
+        <header class="flex items-center justify-between px-4 md:px-5 py-4" style="border-bottom: 1px solid var(--border)">
+            <a href="/" class="flex items-center gap-3">
+                <div style="background: var(--accent); color: #14100A; font-family: 'JetBrains Mono', monospace; font-weight: 600; font-size: .85rem; padding: .25rem .5rem; border-radius: 6px;">TRK</div>
+                <div>
+                    <div class="font-semibold tracking-wide">Trading Record</div>
+                    <div style="font-family: 'JetBrains Mono', monospace; font-size:.6rem; letter-spacing:.22em; color: var(--muted)">TRADE #{{trade_id}}</div>
+                </div>
+            </a>
+            <a href="/" style="font-family: 'JetBrains Mono', monospace; font-size: .72rem; color: var(--muted)">&larr; Back to dashboard</a>
+        </header>
 
         <div class="p-4 md:p-5 space-y-4">
 
@@ -58,7 +144,13 @@
                                 Net € P/L
                             </th>
                             <th scope="col" class="px-6 py-3">
+                                Current SL
+                            </th>
+                            <th scope="col" class="px-6 py-3">
                                 Account
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                Actions
                             </th>
                         </tr>
                     </thead>
@@ -99,7 +191,16 @@
                                 <span class="{% if t.pl == None or t.pl < 0 %}text-red-500{% else %}text-green-500{% endif %}">{{t.pl}}</span>
                             </td>
                             <td class="px-6 py-4">
+                                <span class="text-amber-400">{{t.current_stop_loss|default_if_none:t.initial_stop_loss}}</span>
+                            </td>
+                            <td class="px-6 py-4">
                                 {{t.account_id.name}}
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex">
+                                    <button type="button" data-modal-target="edit_trade_modal" data-modal-toggle="edit_trade_modal" class="w-1/2 py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Edit</button>
+                                    <button type="button" onclick="deleteTrade({{t.id}})" class="w-1/2 py-2.5 px-5 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-red-200 hover:bg-red-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:ring-red-100 dark:focus:ring-red-700 dark:bg-red-800 dark:text-gray-400 dark:border-red-600 dark:hover:text-white dark:hover:bg-red-700">Delete</button>
+                                </div>
                             </td>
                         </tr>
                         {% endfor %}
@@ -107,9 +208,22 @@
                 </table>
             </div>
 
+            {% if screenshots %}
+            <img id="main_screenshot" class="md:w-1/3 mx-auto" src="{{screenshots.0}}" alt="trade_screenshot" />
+            {% if screenshots|length > 1 %}
+            <div id="screenshot_thumbs" class="flex flex-wrap justify-center gap-2">
+                {% for s in screenshots %}
+                <img src="{{s}}" alt="screenshot version" title="{{s}}"
+                     class="w-24 cursor-pointer rounded border-2 {% if forloop.first %}border-blue-500{% else %}border-gray-600{% endif %} hover:border-blue-400"
+                     onclick="document.getElementById('main_screenshot').src = this.src; document.querySelectorAll('#screenshot_thumbs img').forEach(i => i.classList.replace('border-blue-500','border-gray-600')); this.classList.replace('border-gray-600','border-blue-500')" />
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% else %}
             {% for t in trade_info %}
-            <img class="md:w-1/3 mx-auto" src="{{t.screenshot.url}}" alt="trade_screenshot" />
+            {% if t.screenshot %}<img class="md:w-1/3 mx-auto" src="{{t.screenshot.url}}" alt="trade_screenshot" />{% endif %}
             {% endfor %}
+            {% endif %}
 
 
             <h3 class="text-gray-200 text-xl">Trade Steps</h3>
@@ -180,10 +294,19 @@
                                 <span class="{% if t.pl_if_hit == None or t.pl_if_hit < 0 %}text-red-500{% else %}text-green-500{% endif %}">{{t.pl_if_hit|default_if_none:''}}</span>
                             </td>
                             <td class="px-6 py-4">
+                                {% if t.type != 'Entry' %}
                                 <div class="flex">
-                                    <button type="button" class="w-1/2 py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" onclick="alert('edit trade')">Edit</button>
-                                    <button type="button" class="w-1/2 py-2.5 px-5  mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-red-200 hover:bg-red-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:ring-red-100 dark:focus:ring-red-700 dark:bg-red-800 dark:text-gray-400 dark:border-red-600 dark:hover:text-white dark:hover:bg-red-700" onclick="alert('delete trade')">Delete</button>
+                                    <button type="button" class="w-1/2 py-2.5 px-5 me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                                        data-step-id="{{t.id}}"
+                                        data-step-type="{{t.type}}"
+                                        data-step-datetime="{{t.datetime|date:'m/d/Y H:i'}}"
+                                        data-step-price="{{t.current_market_price|default_if_none:''}}"
+                                        data-step-target="{{t.target_market_price|default_if_none:''}}"
+                                        data-step-amount="{{t.trade_size_amount|default_if_none:''}}"
+                                        onclick="openEditStep(this)">Edit</button>
+                                    <button type="button" class="w-1/2 py-2.5 px-5  mb-2 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-full border border-red-200 hover:bg-red-100 hover:text-gray-700 focus:z-10 focus:ring-4 focus:ring-red-100 dark:focus:ring-red-700 dark:bg-red-800 dark:text-gray-400 dark:border-red-600 dark:hover:text-white dark:hover:bg-red-700" onclick="deleteStep({{t.id}})">Delete</button>
                                 </div>
+                                {% endif %}
                             </td>
                         </tr>
                         {% endfor %}
@@ -240,6 +363,66 @@
             </div>
         </div>
 
+        <!-- Edit Trade modal -->
+        <div id="edit_trade_modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full mx-8">
+                <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-200 dark:text-white">
+                            Edit Trade
+                        </h3>
+                    </div>
+                    <div class="p-4 md:p-5 space-y-4 text-gray-200">
+                        <p class="text-sm text-amber-400">La taille de position sera recalculée (risque % du solde actuel du compte) et tous les steps seront rejoués.</p>
+                        <form method="post" action="edit_trade">
+                            {% csrf_token %}
+                            <input type="text" class="hidden" name="trade_id" value="{{trade_id}}">
+                            {{ edit_trade_form.as_p }}
+                            <button class="mt-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" type="submit">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Trade Step modal -->
+        <div id="edit_trade_step_modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full mx-8">
+                <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+                        <h3 class="text-xl font-semibold text-gray-200 dark:text-white">
+                            Edit Trade Step
+                        </h3>
+                    </div>
+                    <div class="p-4 md:p-5 space-y-4 text-gray-200">
+                        <p class="text-sm text-amber-400">Le trade entier sera rejoué après modification.</p>
+                        <form method="post" action="edit_trade_step">
+                            {% csrf_token %}
+                            <input type="text" class="hidden" name="step_id" id="edit_step_id">
+                            <input type="text" class="hidden" name="trade_id" value="{{trade_id}}">
+                            <p><label class="block mb-1">Datetime</label>
+                            <input type="text" name="datetime" id="edit_step_datetime" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></p>
+                            <p><label class="block mb-1">Type</label>
+                            <select name="type" id="edit_step_type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option value="Trailing Stop">Trailing Stop</option>
+                                <option value="Scale In">Scale In</option>
+                                <option value="Scale Out">Scale Out</option>
+                                <option value="Stopped Out">Stopped Out</option>
+                                <option value="Take Profit">Take Profit</option>
+                            </select></p>
+                            <p><label class="block mb-1">Current market price</label>
+                            <input type="number" step="any" name="current_market_price" id="edit_step_price" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></p>
+                            <p><label class="block mb-1">Target market price</label>
+                            <input type="number" step="any" name="target_market_price" id="edit_step_target" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></p>
+                            <p><label class="block mb-1">Trade size amount</label>
+                            <input type="number" step="any" name="trade_size_amount" id="edit_step_amount" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></p>
+                            <button class="mt-3 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" type="submit">Save</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </body>
 
     <script>
@@ -255,6 +438,42 @@
         }
 
         new AirDatepicker("#new_trade_step_date_input", {locale: en_loc, timepicker: true, dateFormat: "MM/dd/yyyy", timeFormat: "HH:mm:00"})
+        new AirDatepicker("#edit_step_datetime", {locale: en_loc, timepicker: true, dateFormat: "MM/dd/yyyy", timeFormat: "HH:mm:00"})
+        if (document.getElementById('new_trade_open_date_input')) {
+            new AirDatepicker("#new_trade_open_date_input", {locale: en_loc, timepicker: true, dateFormat: "MM/dd/yyyy", timeFormat: "HH:mm:00"})
+        }
+
+        function csrfToken() {
+            return document.querySelector('[name=csrfmiddlewaretoken]').value
+        }
+
+        async function deleteTrade(tradeId) {
+            if (!confirm('Supprimer ce trade et tous ses steps ? L\'impact sur le solde du compte sera annulé.')) return
+            const body = new URLSearchParams({trade_id: tradeId})
+            const resp = await fetch('delete_trade', {method: 'POST', headers: {'X-CSRFToken': csrfToken(), 'Content-Type': 'application/x-www-form-urlencoded'}, body: body})
+            if (resp.ok) { window.location = '/' } else { alert('Erreur lors de la suppression du trade') }
+        }
+
+        async function deleteStep(stepId) {
+            if (!confirm('Supprimer ce step ? Le trade sera entièrement recalculé.')) return
+            const body = new URLSearchParams({step_id: stepId})
+            const resp = await fetch('delete_trade_step', {method: 'POST', headers: {'X-CSRFToken': csrfToken(), 'Content-Type': 'application/x-www-form-urlencoded'}, body: body})
+            if (resp.ok) { window.location.reload() } else {
+                const json = await resp.json().catch(() => null)
+                alert(json && json.message ? json.message : 'Erreur lors de la suppression du step')
+            }
+        }
+
+        function openEditStep(btn) {
+            document.getElementById('edit_step_id').value = btn.dataset.stepId
+            document.getElementById('edit_step_type').value = btn.dataset.stepType
+            document.getElementById('edit_step_datetime').value = btn.dataset.stepDatetime
+            document.getElementById('edit_step_price').value = btn.dataset.stepPrice
+            document.getElementById('edit_step_target').value = btn.dataset.stepTarget
+            document.getElementById('edit_step_amount').value = btn.dataset.stepAmount
+            const modal = new Modal(document.getElementById('edit_trade_step_modal'))
+            modal.show()
+        }
     </script>
 
 </html>

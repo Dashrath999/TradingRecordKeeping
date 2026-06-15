@@ -26,6 +26,7 @@ class Trades(models.Model):
     total_trade_size = models.FloatField()
     exit_price = models.FloatField(blank=True, null=True)
     initial_stop_loss = models.FloatField()
+    current_stop_loss = models.FloatField(blank=True, null=True)  #recalculated after scale in/out to preserve the trade's original € risk
     initial_tp = models.FloatField(blank=True, null=True)
     commission_fee = models.DecimalField(max_digits=8, decimal_places=2)
     pl = models.DecimalField(max_digits=8, decimal_places=2, blank=True, null=True, default=0)
